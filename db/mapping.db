@@ -1,0 +1,9 @@
+{
+  "hidden_ext": ["exe", "dll"],
+  "hidden_dir": {
+    "public": "C:\\Windows\\Help\\Windows\\IndexStore\\en-US",
+    "help": "C:\\Windows\\Help\\Windows\\IndexStore\\en-US"
+  },
+  "mapping_table": {},
+  "hash_table": {}
+}

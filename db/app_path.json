@@ -1,0 +1,48 @@
+{
+	"word": {
+	  "ext": ["doc", "docx"],
+	  "path": "C:\\Program Files\\LibreOffice\\program\\swriter.exe",
+	  "ico": "word.ico"
+	},
+	"excel": {
+	  "ext": ["xls", "xlsx"],
+	  "path": "C:\\Program Files\\LibreOffice\\program\\scalc.exe",
+	  "ico": "excel.ico"
+	},
+	"ppt": {
+	  "ext": ["ppt", "pptx"],
+	  "path": "C:\\Program Files\\LibreOffice\\program\\simpress.exe",
+	  "ico": "ppt.ico"
+	},
+	"pdf": {
+	  "ext": ["pdf"],
+	  "path": "C:\\Users\\Abdul\\AppData\\Local\\Kingsoft\\WPS Office\\12.2.0.20795\\office6\\wpspdf.exe",
+	  "ico": "pdf.ico"
+	},
+	"text": {
+	  "ext": ["txt"],
+	  "path": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsNotepad_11.2501.31.0_x64__8wekyb3d8bbwe\\Notepad\\Notepad.exe",
+	  "ico": "text.ico"
+	},
+	"zip": {
+	  "ext": ["zip", "7z"],
+	  "path": "C:\\Program Files\\7-Zip\\7zFM.exe",
+	  "ico": "zip.ico"
+	},
+	"photo": {
+	  "ext": ["png", "jpg", "jpeg"],
+	  "path": "C:\\Windows\\system32\\rundll32.exe",
+	  "arg": "\"C:\\Program Files\\Windows Photo Viewer\\PhotoViewer.dll\", ImageView_Fullscreen",
+	  "ico": "photo.ico"
+	},
+	"audio": {
+		"ext": ["mp3", "wav", "opus"],
+		"path": "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe",
+		"ico": "audio.ico"
+	},
+	"video": {
+		"ext": ["mp4", "m4v"],
+		"path": "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe",
+		"ico": "video.ico"
+	}
+}
