@@ -1,5 +1,5 @@
 """
-This script acts as an entry point to execute hide, link, or recover modules
+This script acts as an entry point to execute hide, link, recover, or reinitialize the database
 based on the command-line arguments provided. It checks if the script is running in
 a frozen state (e.g., using PyInstaller) and adjusts the script paths accordingly.
 
@@ -7,12 +7,92 @@ Usage:
     python ShadowCrypt.py hide --files <file1 file2 ...>   # Executes hiding.py
     python ShadowCrypt.py link --hash <hashed_filename>    # Executes linker.py
     python ShadowCrypt.py recover --all                    # Executes recovery.py
+    python ShadowCrypt.py init                             # Reinitializes the database
 """
 
 import os
 import sys
+import time
 import subprocess
 from modules.common_utils import get_dir_path
+
+
+MAX_ATTEMPTS = 3
+WAIT_TIME = 1
+
+
+def should_reinitialize_db():
+    """
+    Checks if the required .dll files exist in the db directory and if their file sizes are valid.
+    Returns True if reinitialization is needed, otherwise False.
+    """
+    db_dir = os.path.join(get_dir_path(), "db")
+    required_files = ["enc_mapping.dll", "app_path.dll"]
+
+    for file in required_files:
+        file_path = os.path.join(db_dir, file)
+        if not os.path.exists(file_path):
+            return True
+        if os.path.getsize(file_path) == 0:
+            return True
+    return False
+
+
+def run_init_db():
+    """
+    Runs the init_db script to reinitialize the database.
+    """
+    init_db_filename = "init_db.exe" if getattr(sys, 'frozen', False) else "init_db.py"
+    file_path = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else os.path.abspath(__file__)
+    init_db_path = os.path.join(os.path.dirname(file_path), init_db_filename)
+
+    if not os.path.exists(init_db_path):
+        print(f"[-] `{init_db_filename}` not found at: {init_db_path}")
+        input("\n[*] Press Enter to exit...")
+        sys.exit(1)
+
+    if not should_reinitialize_db():
+        try:
+            user_input = input("\n[!] Do you want to reinitialize the database?\nWarning: This will overwrite the existing databases.\nType 'yes' to continue: ").strip().lower()
+            print()
+            if user_input not in ["yes", "y"]:
+                print("\n[-] User aborted the reinitialization.")
+                input("\n[*] Press Enter to exit...")
+                sys.exit(1)
+        except (KeyboardInterrupt, EOFError):
+            print("\n[!] Keyboard Interrupt!")
+            input("\n[*] Press Enter to exit...")
+            sys.exit(1)
+
+    command = [init_db_path] if getattr(sys, 'frozen', False) else [sys.executable, init_db_path]
+
+    attempts = 0
+    while attempts < MAX_ATTEMPTS:
+        try:
+            subprocess.run(command, check=True)
+            break
+        except subprocess.CalledProcessError as e:
+            if e.returncode == 4294967294:
+                input("\n[*] Press Enter to exit...")
+                sys.exit(1)
+            attempts += 1
+            time.sleep(WAIT_TIME)
+            print()
+            if attempts >= MAX_ATTEMPTS:
+                print("[-] Maximum attempts exceeded.")
+                input("\n[*] Press Enter to exit...")
+                sys.exit(1)
+
+
+def check_init_db():
+    """
+    Checks if the required .dll files exist in the db directory and reinitializes if needed.
+    """
+    if should_reinitialize_db():
+        print("\n[!] Missing or invalid database files...")
+        print("\n[*] Initializing the database...")
+        run_init_db()
+
 
 def main():
     """
@@ -20,11 +100,19 @@ def main():
     """
     if len(sys.argv) < 2:
         print("[-] No module specified.")
-        print("[*] Usage: ShadowCrypt.py <module> [arguments]")
-        print("    Modules: hide, link, recover")
+        print("[*] Usage: ShadowCrypt.exe <module> [arguments]") if getattr(sys, 'frozen', False) else print("[*] Usage: ShadowCrypt.py <module> [arguments]")
+        print("    Modules: hide, link, recover, init")
+        input("\n[*] Press Enter to exit...")
         sys.exit(1)
 
     module = sys.argv[1].lower()
+    if module == "init":
+        print("\n[*] Initializing the database...")
+        run_init_db()
+        print("[*] Database initialized successfully.")
+        input("\n[*] Press Enter to exit...")
+        sys.exit(0)
+
     script_map = {
         "hide": "dist\\hiding.exe" if getattr(sys, 'frozen', False) else "hiding.py",
         "link": "dist\\linker.exe" if getattr(sys, 'frozen', False) else "linker.py",
@@ -33,12 +121,16 @@ def main():
 
     if module not in script_map:
         print(f"[-] Invalid module: {module}")
-        print("[*] Valid modules: hide, link, recover")
+        print("[*] Valid modules: hide, link, recover, init")
+        input("\n[*] Press Enter to exit...")
         sys.exit(1)
+
+    check_init_db()
 
     script_path = os.path.join(get_dir_path(), script_map[module])
     if not os.path.exists(script_path):
         print(f"[-] Script not found: {script_path}")
+        input("\n[*] Press Enter to exit...")
         sys.exit(1)
 
     if getattr(sys, 'frozen', False):
@@ -54,3 +146,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    input("\n[*] Press Enter to exit...")
