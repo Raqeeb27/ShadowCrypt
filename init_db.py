@@ -23,7 +23,7 @@ def main() -> None:
     - enc_mapping.dll: Encrypted mapping data.
     - app_path.dll: Application path data (not encrypted).
     """
-    dir_path = get_dir_path()
+    dir_path = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else get_dir_path()
     aes = AESCipher()
     username = os.getlogin()
 
