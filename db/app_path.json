@@ -21,7 +21,7 @@
 	},
 	"text": {
 	  "ext": ["txt"],
-	  "path": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsNotepad_11.2501.31.0_x64__8wekyb3d8bbwe\\Notepad\\Notepad.exe",
+	  "path": "C:\\Windows\\System32\\notepad.exe",
 	  "ico": "text.ico"
 	},
 	"zip": {
