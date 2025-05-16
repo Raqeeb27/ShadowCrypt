@@ -107,14 +107,16 @@ def main():
     """
     Main function to route arguments to the appropriate script.
     """
+
+    print("\n   _____ __              __                 ______                 __ ")
+    print("  / ___// /_  ____ _____/ /___ _      __   / ____/______  ______  / /_")
+    print("  \\__ \\/ __ \\/ __ `/ __  / __ \\ | /| / /  / /   / ___/ / / / __ \\/ __/")
+    print(" ___/ / / / / /_/ / /_/ / /_/ / |/ |/ /  / /___/ /  / /_/ / /_/ / /_")
+    print("/____/_/ /_/\\__,_/\\__,_/\\____/|__/|__/   \\____/_/   \\__, / .___/\\__/")
+    print("                                                   /____/_/\n")
+
     if len(sys.argv) < 2:
-        print("\n   _____ __              __                 ______                 __ ")
-        print("  / ___// /_  ____ _____/ /___ _      __   / ____/______  ______  / /_")
-        print("  \\__ \\/ __ \\/ __ `/ __  / __ \\ | /| / /  / /   / ___/ / / / __ \\/ __/")
-        print(" ___/ / / / / /_/ / /_/ / /_/ / |/ |/ /  / /___/ /  / /_/ / /_/ / /_")
-        print("/____/_/ /_/\\__,_/\\__,_/\\____/|__/|__/   \\____/_/   \\__, / .___/\\__/")
-        print("                                                   /____/_/\n")
-        print("[-] No module specified.")
+        print("\n[-] No module specified.")
         print(f"[*] Usage: ShadowCrypt.exe <module> [arguments]") if getattr(sys, 'frozen', False) else print("[*] Usage: ShadowCrypt.py <module> [arguments]")
         print("    Modules: hide, link, recover, init")
         if getattr(sys, 'frozen', False):
@@ -138,7 +140,7 @@ def main():
     }
 
     if module not in script_map:
-        print(f"[-] Invalid module: {module}")
+        print(f"\n[-] Invalid module: {module}")
         print("[*] Valid modules: hide, link, recover, init")
         input("\n[*] Press Enter to exit...")
         sys.exit(1)

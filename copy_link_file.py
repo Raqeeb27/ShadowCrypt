@@ -94,5 +94,6 @@ if __name__ == "__main__":
     if not args.link_file_path:
         print("[-] No link file path provided.")
         print("[*] Usage: copy_link_file.py --link_file_path <link_file_path>")
+        input("\n[*] Press Enter to exit...")
         sys.exit(1)
     copy_link_file(args.link_file_path)

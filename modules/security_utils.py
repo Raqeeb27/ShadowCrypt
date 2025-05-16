@@ -152,6 +152,7 @@ def load_encrypted_data(filepath: str, aes: AESCipher,
             pw = getpass.getpass(prompt)
         except (KeyboardInterrupt, EOFError):
             print("\n[!] Keyboard Interrupt")
+            input("\n[*] Press Enter to exit...")
             sys.exit(1)
         data = read_file(filepath)
         try:
@@ -165,9 +166,11 @@ def load_encrypted_data(filepath: str, aes: AESCipher,
                 time.sleep(WAIT_TIME)
         except (ValueError, OSError, TypeError) as e:
             print(f"[-] Decryption error: {e}")
+            input("\n[*] Press Enter to exit...")
             sys.exit(1)
 
     print(f"Maximum password attempts ({MAX_ATTEMPTS}) exceeded.")
+    input("\n[*] Press Enter to exit...")
     sys.exit(1)
 
 

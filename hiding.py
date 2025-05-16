@@ -234,6 +234,7 @@ def main(is_test: bool = False, files: list[str] = None) -> None:
             print("[-] No files to hide in testbed folder.")
         elif files:
             print("[-] No valid files selected to hide.")
+        input("\n[*] Press Enter to exit...")
         sys.exit(1)
 
     data["mapping_table"] = MAPPING_DB.mapping_dict
@@ -249,27 +250,32 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not (args.testbed or args.files):
-        print("[-] No arguments provided.")
+        print("\n[-] No arguments provided.")
         print("[*] Usage: hiding.py --files <file1 file2 ...> OR --testbed")
+        input("\n[*] Press Enter to exit...")
         sys.exit(1)
 
     if sum([bool(args.testbed), bool(args.files)]) > 1:
-        print("[-] Only one of --files OR --testbed can be used at a time.")
+        print("\n[-] Only one of --files OR --testbed can be used at a time.")
+        input("\n[*] Press Enter to exit...")
         sys.exit(1)
 
     if args.testbed:
         if not os.path.exists(os.path.join(DIR_PATH, "testbed")):
-            print("[-] Testbed folder does not exist.")
+            print("\n[-] Testbed folder does not exist.")
+            input("\n[*] Press Enter to exit...")
             sys.exit(1)
 
         print("[*] Hiding all files in testbed folder.\n")
 
     elif args.files:
         if not any(os.path.isfile(file) for file in args.files):
-            print("[-] Invalid file paths provided. Some files do not exist or are not valid files.")
+            print("\n[-] Invalid file paths provided. Some files do not exist or are not valid files.")
+            input("\n[*] Press Enter to exit...")
             sys.exit(1)
         if all(file.endswith(".lnk") for file in args.files):
-            print("[-] Invalid file paths provided. `.lnk` files cannot be hidden.")
+            print("\n[-] Invalid file paths provided. `.lnk` files cannot be hidden.")
+            input("\n[*] Press Enter to exit...")
             sys.exit(1)
         print("\n[*] Hiding files:")
         print("\n".join(args.files),"\n")
