@@ -14,9 +14,21 @@ Functions:
 import os
 import sys
 import json
-import shutil
 
 from filelock import FileLock
+
+import ctypes
+import ctypes.wintypes as wintypes
+
+
+MOVEFILE_REPLACE_EXISTING = 0x1
+MOVEFILE_COPY_ALLOWED = 0x2
+
+MoveFileExW = ctypes.windll.kernel32.MoveFileExW
+MoveFileExW.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.DWORD]
+MoveFileExW.restype = wintypes.BOOL
+
+GetLastError = ctypes.windll.kernel32.GetLastError
 
 
 def get_dir_path() -> str:
@@ -105,47 +117,34 @@ def ext_to_app_path(ext: str, app_path_db: dict[str, dict[str, list | str]]) -> 
 
 def move_file(src_path: str, dest_path: str) -> bool:
     """
-    Moves a file from the source path to the destination path.
+    Atomically moves a file from src_path to dest_path on Windows using MoveFileExW.
 
-    This function attempts to move a file using `os.rename` for efficiency. 
-    If `os.rename` fails due to a `PermissionError` or other issues, it falls 
-    back to using `shutil.move` to complete the operation.
+    Attempts to move the file, replacing the destination if it exists. Handles common errors such as
+    permission issues and file-in-use scenarios, providing informative messages for each case.
+    This function attempts to minimize time-of-check to time-of-use (TOCTOU) vulnerabilities and does not fall back
+    to copy/delete operations.
 
     Args:
-        src_path (str): The source file path.
-        dest_path (str): The destination file path.
+        src_path (str): The full path to the source file.
+        dest_path (str): The full path to the destination file.
 
     Returns:
-        bool: True if the file was successfully moved, False otherwise.
-
-    Exceptions:
-        - Handles `PermissionError`:
-            - If the error code is 5 (Access Denied), it suggests checking permissions.
-            - If the file is in use by another process, it advises closing the file.
-        - Handles `OSError`:
-            - Attempts to use `shutil.move` as a fallback if `os.rename` fails.
-
-    Notes:
-        - Ensure the source file exists and the destination path is valid.
-        - Proper permissions are required to move the file.
+        bool: True if the file was moved successfully, False otherwise.
     """
-    try:
-        os.rename(src_path, dest_path)
+
+    success = MoveFileExW(src_path, dest_path, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED)
+    if success:
         return True
-    except PermissionError as e:
-        print(f"\n[!] Failed to hide {src_path}: ",end="")
-        if e.winerror == 5:
-            print(f"Access denied")
-            print("[!] Please ensure you have the necessary permissions.\n")
-        else:
-            print("File is in use by another process.")
-            print("[!] Please close the file and try again.\n")
-    except OSError:
-        try:
-            shutil.move(src_path, dest_path)
-            return True
-        except OSError as e:
-            print(e)
+
+    error_code = GetLastError()
+
+    if error_code == 5:
+        print("[!] Access Denied: Check file/folder permissions.")
+    elif error_code == 32:
+        print("[!] File is in use by another process. Close the file and try again.")
+    else:
+        print(f"[!] Failed with error code {error_code}")
+
     return False
 
 
