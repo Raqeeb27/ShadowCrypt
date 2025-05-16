@@ -42,7 +42,7 @@ def main() -> None:
         print("\n[-] PATH ERROR")
     write_file(os.path.join(dir_path, "db", "app_path.dll"), updated_app_path_data)
 
-    pw = get_verified_password()
+    pw = get_verified_password(validate_password=True)
     mapping_data = read_file(os.path.join(dir_path, "db", "mapping.db"))
 
     enc_mapping = aes.encrypt(mapping_data, pw)
