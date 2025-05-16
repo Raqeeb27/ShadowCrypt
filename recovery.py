@@ -214,7 +214,7 @@ def recovery(hidden_file: str, mapping_dict: dict[str, str],
         return True
 
     except (ValueError, OSError) as e:
-        print(f"  [-] Failed to recover {hidden_file}: {e}")
+        print(f"[-] Failed to recover {hidden_file}: {e}")
         return None
 
 
@@ -318,10 +318,10 @@ if __name__ == "__main__":
         print(f"[+] Recovering file with hash: {args.hash}\n")
 
     elif args.link_files:
-        if not all(os.path.isfile(file) for file in args.link_files):
+        if not any(os.path.isfile(file) for file in args.link_files):
             print("[-] Invalid file paths provided. Some files do not exist or are not valid files.")
             sys.exit(1)
-        if not all(file.endswith(".lnk") for file in args.link_files):
+        if not any(file.endswith(".lnk") for file in args.link_files):
             print("[-] Invalid file paths provided. Only `.lnk` files can be recovered.")
             sys.exit(1)
         print("\n[+] Recovering files: ")
@@ -338,7 +338,7 @@ if __name__ == "__main__":
     elif args.dir:
         args.dir = os.path.abspath(args.dir)
         args.dir = args.dir[:-2] if args.dir.endswith(":\\\"") else args.dir
-        if not (os.path.isdir(args.dir) and os.path.exists(args.dir)):
+        if not os.path.isdir(args.dir):
             print(f"\n[!] Invalid directory: {args.dir}")
             sys.exit(1)
         if args.recursive:
