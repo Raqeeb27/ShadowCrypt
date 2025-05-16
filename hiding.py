@@ -257,7 +257,7 @@ if __name__ == "__main__":
         print("[*] Hiding all files in testbed folder.\n")
 
     elif args.files:
-        if not all(os.path.isfile(file) for file in args.files):
+        if not any(os.path.isfile(file) for file in args.files):
             print("[-] Invalid file paths provided. Some files do not exist or are not valid files.")
             sys.exit(1)
         if all(file.endswith(".lnk") for file in args.files):
