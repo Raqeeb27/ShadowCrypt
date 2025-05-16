@@ -109,8 +109,11 @@ def main():
     """
     if len(sys.argv) < 2:
         print("[-] No module specified.")
-        print("[*] Usage: ShadowCrypt.exe <module> [arguments]") if getattr(sys, 'frozen', False) else print("[*] Usage: ShadowCrypt.py <module> [arguments]")
+        print(f"[*] Usage: ShadowCrypt.exe <module> [arguments]") if getattr(sys, 'frozen', False) else print("[*] Usage: ShadowCrypt.py <module> [arguments]")
         print("    Modules: hide, link, recover, init")
+        if getattr(sys, 'frozen', False):
+            print("\nRun below command to initialize the database.")
+            print("C:\\\"Program Files (x86)\"\\ShadowCrypt\\dist\\ShadowCrypt.exe init")
         input("\n[*] Press Enter to exit...")
         sys.exit(1)
 
