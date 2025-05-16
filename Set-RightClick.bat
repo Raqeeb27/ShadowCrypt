@@ -44,4 +44,5 @@ echo oLink.Save >> "%vbs_file%"
 cscript //nologo "%vbs_file%"
 del "%vbs_file%"
 
-pause
+if not exist "%~dp0Uninstallation" mkdir "%~dp0Uninstallation"
+copy "%~dp0Remove-RightClick.bat" "%~dp0Uninstallation\Remove-RightClickMenuOptions.bat"
