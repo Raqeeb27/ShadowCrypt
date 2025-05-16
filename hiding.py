@@ -1,14 +1,22 @@
 """
+ShadowCrypt File Hider
+
 This module provides functionality for securely hiding files by:
-- Moving original files to hidden files with obfuscated names.
-- Storing mappings of original_file_path and hidden_file_path in an encrypted database.
-- Creating shortcuts for easy access to hidden files.
-- Synchronizing the access time and modification time of the shortcuts with the original files.
-- Supports multiple files for hiding.
+- Moving original files to hidden directories with obfuscated names.
+- Storing mappings of original and hidden file paths in an encrypted database.
+- Creating Windows shortcut (.lnk) files for easy access to hidden files.
+- Synchronizing the access and modification times of shortcuts with the hidden files.
+- Supporting multiple files and batch operations via command-line arguments.
+- Validating file extensions and associating them with application icons.
 
 Usage:
-    python hiding.py --files <file1 file2 ...>  # Hides multiple files
-    python hiding.py --testbed                  # Hides all files in the testbed folder
+    python hiding.py --files <file1 file2 ...>  # Hide one or more files
+    python hiding.py --testbed                  # Hide all files in the testbed folder
+
+Notes:
+    - Only supported file extensions can be hidden.
+    - `.lnk` files cannot be hidden.
+    - All mappings and sensitive data are stored securely using AES encryption.
 """
 
 import os

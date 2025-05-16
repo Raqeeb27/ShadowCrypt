@@ -1,4 +1,13 @@
-# install.ps1
+<#
+.SYNOPSIS
+Installation script for ShadowCrypt.
+
+.DESCRIPTION
+This PowerShell script (install.ps1) is intended to automate the installation process for the ShadowCrypt application.
+
+.NOTES
+File: install.ps1
+#>
 
 echo "[*] Installing environment with uv.`n"
 uv sync

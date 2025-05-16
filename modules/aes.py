@@ -1,4 +1,15 @@
-""" AES Cipher """
+"""
+AES Cipher Module
+This module provides the `AESCipher` class for symmetric encryption and decryption using the AES algorithm in CBC mode.
+Keys are derived from passwords using SHA-256, and data is padded using PKCS#7-style padding.
+Classes:
+    AESCipher: 
+        Provides methods for encrypting and decrypting strings with AES-256 using password-based key derivation.
+Usage Example:
+    cipher = AESCipher()
+    encrypted = cipher.encrypt("my secret message", "password123")
+    decrypted = cipher.decrypt(encrypted, "password123")
+"""
 
 from hashlib import sha256
 

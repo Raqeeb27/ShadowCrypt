@@ -2,13 +2,13 @@
 Utils for common operations.
 
 Functions:
-- get_dir_path: Retrieves the base directory path for the current environment.
-- read_file: Reads the content of a file.
-- write_file: Writes data to a file.
-- load_json: Loads and parses JSON data from a file.
-- ext_to_app_path: Maps file extensions to their corresponding applications.
-- move_file: Moves a file from one location to another.
-- validate_extension: Validates and sanitizes file extensions.
+- get_dir_path: Retrieves the base directory path of the current script or executable.
+- read_file: Reads the content of a text file with file locking.
+- write_file: Writes data to a file with file locking.
+- load_json: Loads and parses JSON data from a file with file locking.
+- ext_to_app_path: Maps a file extension to the corresponding application path.
+- move_file: Atomically moves a file from src_path to dest_path on Windows.
+- process_filename_for_extension: Validates and sanitizes the file extension of a given file path.
 """
 
 import os
@@ -139,11 +139,11 @@ def move_file(src_path: str, dest_path: str) -> bool:
     error_code = GetLastError()
 
     if error_code == 5:
-        print("[!] Access Denied: Check file/folder permissions.")
+        print("\n[!] Access Denied: Check file/folder permissions.\n")
     elif error_code == 32:
-        print("[!] File is in use by another process. Close the file and try again.")
+        print("\n[!] File is in use by another process. Close the file and try again.\n")
     else:
-        print(f"[!] Failed with error code {error_code}")
+        print(f"\n[!] Failed with error code {error_code}\n")
 
     return False
 

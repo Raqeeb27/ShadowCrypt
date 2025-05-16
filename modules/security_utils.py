@@ -7,11 +7,11 @@ postprocessing encrypted data.
 
 Functions:
 - hash_name: Generates a SHA-1 hash for a given string.
-- name_gen: Creates unique file names with obfuscated extensions.
-- check_password_requirements: Validates a password against specific requirements.
-- get_verified_password: Prompts the user for a password with optional confirmation.
-- load_encrypted_data: Decrypts and loads data from an encrypted file.
-- postprocessing: Encrypts and writes mapping data to a file.
+- name_gen: Generates a random file name with a random extension.
+- check_password_requirements: Checks a password against defined requirements.
+- get_verified_password: Prompts the user to enter and confirm a password, with optional validation.
+- load_encrypted_data: Loads and decrypts data from an encrypted file using a password.
+- postprocessing: Encrypts and writes a dictionary to a specified file path.
 """
 
 import sys

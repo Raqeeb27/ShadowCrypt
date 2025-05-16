@@ -1,13 +1,22 @@
 """
-This script acts as an entry point to execute hide, link, recover, or reinitialize the database
-based on the command-line arguments provided. It checks if the script is running in
-a frozen state (e.g., using PyInstaller) and adjusts the script paths accordingly.
+ShadowCrypt - Entry Point Script
 
-Usage:
-    python ShadowCrypt.py hide --files <file1 file2 ...>   # Executes hiding.py
-    python ShadowCrypt.py link --hash <hashed_filename>    # Executes linker.py
-    python ShadowCrypt.py recover --all                    # Executes recovery.py
-    python ShadowCrypt.py init                             # Reinitializes the database
+This script serves as the main entry point for ShadowCrypt, allowing users to execute
+the following modules via command-line arguments:
+
+    - hide:    Hide files using the hiding module.
+    - link:    Link hashed filenames using the linker module.
+    - recover: Recover files using the recovery module.
+    - init:    (Re)initialize the database.
+
+The script automatically checks for required database files and reinitializes them if missing
+or invalid.
+
+Usage Examples:
+    python ShadowCrypt.py hide --files <file1 file2 ...>
+    python ShadowCrypt.py link --hash <hashed_filename>
+    python ShadowCrypt.py recover --all
+    python ShadowCrypt.py init
 """
 
 import os

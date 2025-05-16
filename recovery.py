@@ -1,12 +1,16 @@
 """
+ShadowCrypt File Recover Module
+
 This module handles the recovery of files that were previously hidden.
-It renames obfuscated files back to their original names and removes
-associated shortcuts.
+It restores obfuscated files to their original names and removes
+associated shortcuts (.lnk files).
 
 Usage:
-    python recovery.py --hash <hashed_filename>         # Recover a file using its hashed_filename
-    python recovery.py --link_file_path <shortcut.lnk>  # Recover a file using its shortcut
+    python recovery.py --hash <hashed_filename>         # Recover a file using its hash
+    python recovery.py --link_files <shortcut1.lnk> [shortcut2.lnk ...]  # Recover one or more files using their shortcuts
     python recovery.py --all                            # Recover all hidden files
+    python recovery.py --testbed                        # Recover all .lnk files in the testbed directory
+    python recovery.py --dir <directory> [-R]           # Recover all .lnk files in a directory (optionally recursively)
 """
 
 import os
