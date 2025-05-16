@@ -1,8 +1,13 @@
 {
   "hidden_ext": ["exe", "dll"],
   "hidden_dir": {
-    "public": "C:\\Windows\\Help\\Windows\\IndexStore\\en-US",
-    "help": "C:\\Windows\\Help\\Windows\\IndexStore\\en-US"
+    "help": "C:\\Windows\\Help\\Windows\\IndexStore\\en-US",
+    "speech": "C:\\Windows\\Speech\\Engines",
+    "winhelp": "C:\\Windows\\Help",
+    "templates": "C:\\Windows\\PLA\\Templates",
+    "shared": "C:\\Windows\\System32\\IME\\SHARED",
+    "engines": "C:\\Windows\\System32\\Speech\\Engines",
+    "mui": "C:\\Windows\\Help\\mui"
   },
   "mapping_table": {},
   "hash_table": {}
