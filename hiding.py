@@ -93,7 +93,7 @@ def make_shortcut(file_path: str, ext_icon_dict: dict[str, str],
 
     ext = file_path.split(".")[-1].lower()
     if ext not in ext_icon_dict:
-        print(f"[-] Failed to hide {file_path}. Extension {ext} is not supported.")
+        print(f"[-] Failed to hide {file_path}. Extension '.{ext}' is not supported.")
         return None
 
     app_path = ext_to_app_path(ext, APP_PATH_DB)
@@ -153,7 +153,7 @@ def make_shortcut(file_path: str, ext_icon_dict: dict[str, str],
         MAPPING_DB.mapping_dict[hidden_file_path] = file_path
         MAPPING_DB.hash_table[hashed_name] = hidden_file_path
 
-        print(f"[+] Hiding success: {file_path} -> {hidden_file_path}")
+        print(f"  [+] Hiding success: {file_path} -> {hidden_file_path}")
         return hidden_file_path
 
     except (ValueError, OSError) as e:
