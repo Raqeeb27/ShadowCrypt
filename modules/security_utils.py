@@ -107,8 +107,8 @@ def get_verified_password(validate_password=False) -> str:
                     validation fails.
     """
     try:
-        pw = getpass.getpass("Enter PASSWORD: ")
-        pw2 = getpass.getpass("Confirm PASSWORD: ")
+        pw = getpass.getpass("Create new PASSWORD: ")
+        pw2 = getpass.getpass("\nConfirm PASSWORD: ")
 
         if not pw or pw != pw2:
             print("\n[-] PASSWORD mismatch or empty. Please try again.")
@@ -124,9 +124,10 @@ def get_verified_password(validate_password=False) -> str:
 
     except (KeyboardInterrupt, EOFError):
         print("\n\n[-] Keyboard Interrupt")
+        sys.exit(-2)
     except ValueError as e:
         print(e)
-    sys.exit(1)
+        sys.exit(1)
 
 
 def load_encrypted_data(filepath: str, aes: AESCipher,
