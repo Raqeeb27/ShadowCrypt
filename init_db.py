@@ -25,10 +25,12 @@ def main() -> None:
     """
     dir_path = get_dir_path()
     aes = AESCipher()
+    username = os.getlogin()
 
     # Read app_path.json
     app_path_data = read_file(os.path.join(dir_path, "db", "app_path.json"))
-    app_path_json = json.loads(app_path_data)
+    updated_app_path_data = app_path_data.replace("USERNAME_PLACEHOLDER", username)
+    app_path_json = json.loads(updated_app_path_data)
 
     invalid_paths = []
     for app, details in app_path_json.items():
@@ -38,8 +40,7 @@ def main() -> None:
             invalid_paths.append(app_path)
     if invalid_paths:
         print("\n[-] PATH ERROR")
-        sys.exit(1)
-    write_file(os.path.join(dir_path, "db", "app_path.dll"), app_path_data)
+    write_file(os.path.join(dir_path, "db", "app_path.dll"), updated_app_path_data)
 
     pw = get_verified_password()
     mapping_data = read_file(os.path.join(dir_path, "db", "mapping.db"))
