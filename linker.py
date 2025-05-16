@@ -1,10 +1,18 @@
 """
-This module handles the mapping and execution of files based on hashed names.
-It retrieves application paths and mapping data to execute files securely 
-via shortcuts. This helps in linking hidden files to their respective applications.
+ShadowCrypt File Linker
+
+This module provides functionality to open files using their hashed names.
+It securely retrieves file mappings and application associations, then launches
+the appropriate application to open the hidden file.
 
 Usage:
     python linker.py --hash <hashed_filename>
+
+Arguments:
+    --hash    The hash name of the file to be opened.
+
+The module ensures that only mapped and existing files are opened, and
+handles errors such as missing mappings, missing files, or missing application associations.
 """
 
 import os
