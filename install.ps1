@@ -59,7 +59,7 @@ echo "`n---------------------------------`n"
 echo "[*] Cleaning Up.`n"
 rm *.spec
 rm -r build/
-echo "`n[+] Done`n"
+echo "`n[+] Done"
 echo "`n---------------------------------`n"
 
 Write-Host "[+] Installation completed successfully.`n"
