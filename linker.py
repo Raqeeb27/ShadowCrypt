@@ -22,7 +22,7 @@ import argparse
 import subprocess
 
 from modules.aes import AESCipher
-from modules.common_utils import get_dir_path, load_json, ext_to_app_path
+from modules.common_utils import get_dir_path, load_json, ext_to_app_path, hold_console_for_input
 from modules.security_utils import load_encrypted_data
 
 
@@ -54,18 +54,18 @@ def main(hashed_name: str) -> None:
 
     if hashed_name not in hash_table:
         print("[-] Provided file hash name not found.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     hidden_name = hash_table[hashed_name]
     if not os.path.exists(hidden_name):
         print("[-] Hidden file does not exist.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     if hidden_name not in mapping_dict:
         print("[-] Mapping for hidden file not found.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     file_name = mapping_dict[hidden_name]
@@ -73,7 +73,7 @@ def main(hashed_name: str) -> None:
     app = ext_to_app_path(ext, app_path_dict)
     if not app:
         print("[-] No application mapped for the file extension.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     try:
@@ -82,7 +82,7 @@ def main(hashed_name: str) -> None:
     except PermissionError as e:
         print(f"\n[!] Failed to open {hidden_name}: File is in use by another process.")
         print("[!] Please close the file and try again.\n")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     if ext in app_path_dict.get("photo", {}).get("ext", []):
@@ -100,8 +100,15 @@ if __name__ == "__main__":
         description="Link file via hashed filename.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-    parser.add_argument("--hash", required=True, help="Hashed filename")
+    parser.add_argument("--hash", help="Hashed filename")
     args = parser.parse_args()
+
+    if not args.hash:
+        print("\n[-] No hash provided.")
+        f = "ShadowCrypt.exe link" if getattr(sys, 'frozen', False) else "linker.py"
+        print(f"[*] Usage: {f} --hash <hashed_filename>")
+        hold_console_for_input()
+        sys.exit(1)
 
     print("[*] Opening the file...\n")
 

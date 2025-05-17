@@ -23,7 +23,7 @@ import os
 import sys
 import time
 import subprocess
-from modules.common_utils import get_dir_path
+from modules.common_utils import get_dir_path, hold_console_for_input
 
 
 MAX_ATTEMPTS = 3
@@ -57,20 +57,19 @@ def run_init_db():
 
     if not os.path.exists(init_db_path):
         print(f"[-] `{init_db_filename}` not found at: {init_db_path}")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     if not should_reinitialize_db():
         try:
             user_input = input("\n[!] Do you want to reinitialize the database?\nWarning: This will overwrite the existing databases.\nType 'yes' to continue: ").strip().lower()
-            print()
             if user_input not in ["yes", "y"]:
-                print("[-] Reinitialization aborted.")
-                input("\n[*] Press Enter to exit...")
+                print("\n[-] Reinitialization aborted.")
+                hold_console_for_input()
                 sys.exit(1)
         except (KeyboardInterrupt, EOFError):
             print("\n[!] Keyboard Interrupt!")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
 
     command = [init_db_path] if getattr(sys, 'frozen', False) else [sys.executable, init_db_path]
@@ -82,14 +81,14 @@ def run_init_db():
             break
         except subprocess.CalledProcessError as e:
             if e.returncode == 4294967294:
-                input("\n[*] Press Enter to exit...")
+                hold_console_for_input()
                 sys.exit(1)
             attempts += 1
             time.sleep(WAIT_TIME)
             print()
             if attempts >= MAX_ATTEMPTS:
                 print("[-] Maximum attempts exceeded.")
-                input("\n[*] Press Enter to exit...")
+                hold_console_for_input()
                 sys.exit(1)
 
 
@@ -122,7 +121,7 @@ def main():
         if getattr(sys, 'frozen', False):
             print("\nRun below command to initialize the database.")
             print("C:\\\"Program Files (x86)\"\\ShadowCrypt\\dist\\ShadowCrypt.exe init")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     module = sys.argv[1].lower()
@@ -130,7 +129,7 @@ def main():
         print("\n[*] Initializing the database...")
         run_init_db()
         print("\n[*] Database initialized successfully.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(0)
 
     script_map = {
@@ -142,7 +141,7 @@ def main():
     if module not in script_map:
         print(f"\n[-] Invalid module: {module}")
         print("[*] Valid modules: hide, link, recover, init")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     check_init_db()
@@ -150,7 +149,7 @@ def main():
     script_path = os.path.join(get_dir_path(), script_map[module])
     if not os.path.exists(script_path):
         print(f"[-] Script not found: {script_path}")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     if getattr(sys, 'frozen', False):
@@ -166,4 +165,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    input("\n[*] Press Enter to exit...")
+    hold_console_for_input()

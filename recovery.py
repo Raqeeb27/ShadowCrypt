@@ -23,7 +23,7 @@ import pylnk3
 
 from pathlib import Path
 from modules.aes import AESCipher
-from modules.common_utils import get_dir_path, move_file, process_filename_for_extension
+from modules.common_utils import get_dir_path, move_file, process_filename_for_extension, hold_console_for_input
 from modules.security_utils import hash_name, postprocessing, load_encrypted_data
 
 
@@ -90,7 +90,7 @@ def search_lnk_files(directory: Path, recursive: bool = True, excluded_paths: li
         return lnk_files
     except (KeyboardInterrupt, EOFError):
         print("\n[!] Search interrupted by user.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
     except (OSError, ValueError) as e:
         print(f"[!] Error while searching for .lnk files in {directory}: {e}")
@@ -142,7 +142,7 @@ def find_lnks_with_hash() -> list[str] | None:
             print("[-] No .lnk files with '--hash' in their target were found.")
     except (KeyboardInterrupt, EOFError):
         print("\n[!] Search interrupted by user.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
     except Exception as e:
         print("[!] An error occurred: \n", e)
@@ -247,7 +247,7 @@ def main(hashed_name: str | None = None, files: list | None = None,
 
     if not mapping_dict:
         print("[-] No hidden files to recover.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     if dir_path:
@@ -256,7 +256,7 @@ def main(hashed_name: str | None = None, files: list | None = None,
             if os.path.basename(dir_path) == "testbed":
                 dir_path = "testbed"
             print(f"[-] No .lnk files found in {dir_path}.")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
         recover_valid_found_links(lnks_to_search, hash_table, mapping_dict)
 
@@ -311,18 +311,19 @@ if __name__ == "__main__":
 
     if not any([args.hash, args.link_files, args.all, args.testbed, args.dir]):
         print("[-] No arguments provided.")
-        print("[*] Usage: recover.py --all OR --hash <hash>\nOR --link_file_path <link_file_path> OR --testbed OR --dir <dir_path>")
-        input("\n[*] Press Enter to exit...")
+        f = "ShadowCrypt.exe recover" if getattr(sys, 'frozen', False) else "recovery.py"
+        print(f"[*] Usage: {f} --all OR --hash <hash>\nOR --link_file_path <link_file_path> OR --testbed OR --dir <dir_path>")
+        hold_console_for_input()
         sys.exit(1)
 
     if sum([bool(args.hash), bool(args.link_files), bool(args.all), bool(args.testbed), bool(args.dir)]) > 1:
         print("[-] Only one of --all, --hash, --link_file_path, --testbed or --dir can be used at a time.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     if args.recursive and not args.dir:
         print("[-] The -R/--recursive option can only be used with --dir.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     if args.hash:
@@ -331,11 +332,11 @@ if __name__ == "__main__":
     elif args.link_files:
         if not any(os.path.isfile(file) for file in args.link_files):
             print("[-] Invalid file paths provided. Some files do not exist or are not valid files.")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
         if not any(file.endswith(".lnk") for file in args.link_files):
             print("[-] Invalid file paths provided. Only `.lnk` files can be recovered.")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
         print("\n[+] Recovering files: ")
         print("\n".join(args.link_files),"\n")
@@ -353,7 +354,7 @@ if __name__ == "__main__":
         args.dir = args.dir[:-2] if args.dir.endswith(":\\\"") else args.dir
         if not os.path.isdir(args.dir):
             print(f"\n[!] Invalid directory: {args.dir}")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
         if args.recursive:
             print(f"[*] Recovering all hidden files in {args.dir} and its subdirectories...\n")

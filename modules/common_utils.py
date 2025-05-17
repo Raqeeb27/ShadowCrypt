@@ -111,6 +111,11 @@ def ext_to_app_path(ext: str, app_path_db: dict[str, dict[str, list | str]]) -> 
     """
     for info in app_path_db.values():
         if ext in info.get("ext", []):
+            if info.get("ext") == ["pdf"]:
+                username = os.getlogin()
+                info["path"] = info.get("path", "").replace("USERNAME_PLACEHOLDER", username)
+                if not os.path.exists(info["path"]):
+                    return ""
             return info.get("path", "")
     return ""
 

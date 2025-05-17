@@ -42,22 +42,22 @@ def main() -> None:
     """
     dir_path = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else get_dir_path()
     aes = AESCipher()
-    username = os.getlogin()
 
     # Read app_path.json
     app_path_data = read_file(os.path.join(dir_path, "db", "app_path.json"))
-    updated_app_path_data = app_path_data.replace("USERNAME_PLACEHOLDER", username)
-    app_path_json = json.loads(updated_app_path_data)
+    app_path_json = json.loads(app_path_data)
 
     invalid_paths = []
     for app, details in app_path_json.items():
         app_path = details.get("path")
+        if app == "pdf":
+            continue
         if not os.path.exists(app_path):
             print(f"Warning: Path for '{app}' does not exist: {app_path}")
             invalid_paths.append(app_path)
     if invalid_paths:
         print("\n[-] PATH ERROR")
-    write_file(os.path.join(dir_path, "db", "app_path.dll"), updated_app_path_data)
+    write_file(os.path.join(dir_path, "db", "app_path.dll"), app_path_data)
 
     pw = get_verified_password(validate_password=True)
     mapping_data = read_file(os.path.join(dir_path, "db", "mapping.db"))

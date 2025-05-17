@@ -26,7 +26,6 @@ if ($confirmation -ne "yes" -and $confirmation -ne "y") {
     Write-Host "`n[!] Aborting database initialization."
 }
 else {
-    Write-Host
     $output = uv run init_db.py | ForEach-Object { Write-Host $_; $_ }
     if ($output) {
         if ($output[-1] -eq "[-] PASSWORD ERROR" -or $output[-1] -eq "[-] Keyboard Interrupt" -or $output[-1] -eq "[-] PATH ERROR") {

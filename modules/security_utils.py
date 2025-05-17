@@ -23,7 +23,7 @@ import hashlib
 import getpass
 
 from modules.aes import AESCipher
-from modules.common_utils import read_file, write_file
+from modules.common_utils import read_file, write_file, hold_console_for_input
 
 
 MAX_ATTEMPTS = 3
@@ -107,7 +107,7 @@ def get_verified_password(validate_password=False) -> str:
                     validation fails.
     """
     try:
-        pw = getpass.getpass("Create new PASSWORD: ")
+        pw = getpass.getpass("\nCreate new PASSWORD: ")
         pw2 = getpass.getpass("\nConfirm PASSWORD: ")
 
         if not pw or pw != pw2:
@@ -152,7 +152,7 @@ def load_encrypted_data(filepath: str, aes: AESCipher,
             pw = getpass.getpass(prompt)
         except (KeyboardInterrupt, EOFError):
             print("\n[!] Keyboard Interrupt")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
         data = read_file(filepath)
         try:
@@ -166,11 +166,11 @@ def load_encrypted_data(filepath: str, aes: AESCipher,
                 time.sleep(WAIT_TIME)
         except (ValueError, OSError, TypeError) as e:
             print(f"[-] Decryption error: {e}")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
 
     print(f"Maximum password attempts ({MAX_ATTEMPTS}) exceeded.")
-    input("\n[*] Press Enter to exit...")
+    hold_console_for_input()
     sys.exit(1)
 
 

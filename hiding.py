@@ -30,7 +30,7 @@ from dataclasses import dataclass
 from pylnk3 import for_file
 
 from modules.aes import AESCipher
-from modules.common_utils import get_dir_path, load_json, ext_to_app_path, move_file, process_filename_for_extension
+from modules.common_utils import get_dir_path, load_json, ext_to_app_path, move_file, process_filename_for_extension, hold_console_for_input
 from modules.security_utils import hash_name, name_gen, load_encrypted_data, postprocessing
 
 
@@ -72,6 +72,9 @@ def preprocessing() -> dict[str, str]:
     ext_icon_dict = {}
     for key in list(APP_PATH_DB.keys()):
         app = APP_PATH_DB.get(key)
+        if key == "pdf":
+            username = os.getlogin()
+            app["path"] = app["path"].replace("USERNAME_PLACEHOLDER", username)
         if not os.path.exists(app.get("path", "")):
             print(f"[-] {key} application doesn't exist.")
             APP_PATH_DB.pop(key)
@@ -234,7 +237,7 @@ def main(is_test: bool = False, files: list[str] = None) -> None:
             print("[-] No files to hide in testbed folder.")
         elif files:
             print("[-] No valid files selected to hide.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     data["mapping_table"] = MAPPING_DB.mapping_dict
@@ -251,19 +254,20 @@ if __name__ == "__main__":
 
     if not (args.testbed or args.files):
         print("\n[-] No arguments provided.")
-        print("[*] Usage: hiding.py --files <file1 file2 ...> OR --testbed")
-        input("\n[*] Press Enter to exit...")
+        f = "ShadowCrypt.exe hide" if getattr(sys, 'frozen', False) else "hiding.py"
+        print(f"[*] Usage: {f} --files <file1 file2 ...> OR --testbed")
+        hold_console_for_input()
         sys.exit(1)
 
     if sum([bool(args.testbed), bool(args.files)]) > 1:
         print("\n[-] Only one of --files OR --testbed can be used at a time.")
-        input("\n[*] Press Enter to exit...")
+        hold_console_for_input()
         sys.exit(1)
 
     if args.testbed:
         if not os.path.exists(os.path.join(DIR_PATH, "testbed")):
             print("\n[-] Testbed folder does not exist.")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
 
         print("[*] Hiding all files in testbed folder.\n")
@@ -271,11 +275,11 @@ if __name__ == "__main__":
     elif args.files:
         if not any(os.path.isfile(file) for file in args.files):
             print("\n[-] Invalid file paths provided. Some files do not exist or are not valid files.")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
         if all(file.endswith(".lnk") for file in args.files):
             print("\n[-] Invalid file paths provided. `.lnk` files cannot be hidden.")
-            input("\n[*] Press Enter to exit...")
+            hold_console_for_input()
             sys.exit(1)
         print("\n[*] Hiding files:")
         print("\n".join(args.files),"\n")
