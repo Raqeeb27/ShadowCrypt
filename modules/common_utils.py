@@ -172,3 +172,17 @@ def process_filename_for_extension(file_path: str) -> str | None:
     else:
         end_of_filename = file_path.rfind(ext) + len(ext)
         return file_path[:end_of_filename]
+
+
+def hold_console_for_input() -> None:
+    """
+    Waits for user input before exiting.
+
+    This function prompts the user to press Enter before the program exits.
+    Useful for allowing users to read messages before the console window closes.
+    """
+    try:
+        input("\n[*] Press Enter to exit...")
+    except (KeyboardInterrupt, EOFError):
+        print("\n[!] Keyboard Interrupt")
+        sys.exit(1)
