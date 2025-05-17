@@ -65,7 +65,7 @@ def run_init_db():
             user_input = input("\n[!] Do you want to reinitialize the database?\nWarning: This will overwrite the existing databases.\nType 'yes' to continue: ").strip().lower()
             print()
             if user_input not in ["yes", "y"]:
-                print("\n[-] User aborted the reinitialization.")
+                print("[-] Reinitialization aborted.")
                 input("\n[*] Press Enter to exit...")
                 sys.exit(1)
         except (KeyboardInterrupt, EOFError):
@@ -129,7 +129,7 @@ def main():
     if module == "init":
         print("\n[*] Initializing the database...")
         run_init_db()
-        print("[*] Database initialized successfully.")
+        print("\n[*] Database initialized successfully.")
         input("\n[*] Press Enter to exit...")
         sys.exit(0)
 
