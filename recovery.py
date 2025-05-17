@@ -310,7 +310,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not any([args.hash, args.link_files, args.all, args.testbed, args.dir]):
-        print("[-] No arguments provided.")
+        print("\n[-] No arguments provided.")
         f = "ShadowCrypt.exe recover" if getattr(sys, 'frozen', False) else "recovery.py"
         print(f"[*] Usage: {f} --all OR --hash <hash>\nOR --link_file_path <link_file_path> OR --testbed OR --dir <dir_path>")
         hold_console_for_input()

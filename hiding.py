@@ -72,9 +72,6 @@ def preprocessing() -> dict[str, str]:
     ext_icon_dict = {}
     for key in list(APP_PATH_DB.keys()):
         app = APP_PATH_DB.get(key)
-        if key == "pdf":
-            username = os.getlogin()
-            app["path"] = app["path"].replace("USERNAME_PLACEHOLDER", username)
         if not os.path.exists(app.get("path", "")):
             print(f"[-] {key} application doesn't exist.")
             APP_PATH_DB.pop(key)

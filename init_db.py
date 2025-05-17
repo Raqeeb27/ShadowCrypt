@@ -22,7 +22,7 @@ import sys
 import json
 
 from modules.aes import AESCipher
-from modules.common_utils import get_dir_path, read_file, write_file
+from modules.common_utils import get_dir_path, read_file, write_file, hold_console_for_input
 from modules.security_utils import get_verified_password
 
 
@@ -43,15 +43,12 @@ def main() -> None:
     dir_path = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else get_dir_path()
     aes = AESCipher()
 
-    # Read app_path.json
     app_path_data = read_file(os.path.join(dir_path, "db", "app_path.json"))
     app_path_json = json.loads(app_path_data)
 
     invalid_paths = []
     for app, details in app_path_json.items():
         app_path = details.get("path")
-        if app == "pdf":
-            continue
         if not os.path.exists(app_path):
             print(f"Warning: Path for '{app}' does not exist: {app_path}")
             invalid_paths.append(app_path)
@@ -65,9 +62,9 @@ def main() -> None:
     enc_mapping = aes.encrypt(mapping_data, pw)
     write_file(os.path.join(dir_path, "db", "enc_mapping.dll"), enc_mapping)
 
-    # os.remove(f"{DIR_PATH}\\db\\mapping.db")
-    # os.remove(f"{DIR_PATH}\\db\\app_path.json")
-
 
 if __name__ == "__main__":
+    if len(sys.argv) >= 1:
+        print(f"\n[-] No arguments are expected, but {len(sys.argv) - 1} were provided.")
+        hold_console_for_input()
     main()

@@ -14,6 +14,7 @@ Functions:
 import os
 import sys
 import json
+import time
 
 from filelock import FileLock
 
@@ -111,11 +112,6 @@ def ext_to_app_path(ext: str, app_path_db: dict[str, dict[str, list | str]]) -> 
     """
     for info in app_path_db.values():
         if ext in info.get("ext", []):
-            if info.get("ext") == ["pdf"]:
-                username = os.getlogin()
-                info["path"] = info.get("path", "").replace("USERNAME_PLACEHOLDER", username)
-                if not os.path.exists(info["path"]):
-                    return ""
             return info.get("path", "")
     return ""
 
@@ -189,5 +185,6 @@ def hold_console_for_input() -> None:
     try:
         input("\n[*] Press Enter to exit...")
     except (KeyboardInterrupt, EOFError):
-        print("\n[!] Keyboard Interrupt")
+        print("\n\n[!] Keyboard Interrupt\n")
+        time.sleep(0.75)
         sys.exit(1)
