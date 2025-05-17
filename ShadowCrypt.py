@@ -30,6 +30,19 @@ MAX_ATTEMPTS = 3
 WAIT_TIME = 1
 
 
+def display_banner():
+    """
+    Displays the ShadowCrypt banner.
+    """
+    print("\n" + "=" * 75)
+    print("\n    _____ __              __                 ______                 __ ")
+    print("   / ___// /_  ____ _____/ /___ _      __   / ____/______  ______  / /_")
+    print("   \\__ \\/ __ \\/ __ `/ __  / __ \\ | /| / /  / /   / ___/ / / / __ \\/ __/")
+    print("  ___/ / / / / /_/ / /_/ / /_/ / |/ |/ /  / /___/ /  / /_/ / /_/ / /_")
+    print(" /____/_/ /_/\\__,_/\\__,_/\\____/|__/|__/   \\____/_/   \\__, / .___/\\__/")
+    print("                                                    /____/_/\n")
+    print("=" * 75)
+
 def should_reinitialize_db():
     """
     Checks if the required .dll files exist in the db directory and if their file sizes are valid.
@@ -68,7 +81,7 @@ def run_init_db():
                 hold_console_for_input()
                 sys.exit(1)
         except (KeyboardInterrupt, EOFError):
-            print("\n[!] Keyboard Interrupt!")
+            print("\n\n[!] Keyboard Interrupt!")
             hold_console_for_input()
             sys.exit(1)
 
@@ -107,12 +120,7 @@ def main():
     Main function to route arguments to the appropriate script.
     """
 
-    print("\n    _____ __              __                 ______                 __ ")
-    print("   / ___// /_  ____ _____/ /___ _      __   / ____/______  ______  / /_")
-    print("   \\__ \\/ __ \\/ __ `/ __  / __ \\ | /| / /  / /   / ___/ / / / __ \\/ __/")
-    print("  ___/ / / / / /_/ / /_/ / /_/ / |/ |/ /  / /___/ /  / /_/ / /_/ / /_")
-    print(" /____/_/ /_/\\__,_/\\__,_/\\____/|__/|__/   \\____/_/   \\__, / .___/\\__/")
-    print("                                                    /____/_/\n")
+    display_banner()
 
     if len(sys.argv) < 2:
         print("\n[-] No module specified.")
