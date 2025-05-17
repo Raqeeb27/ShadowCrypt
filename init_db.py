@@ -64,7 +64,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) >= 1:
-        print(f"\n[-] No arguments are expected, but {len(sys.argv) - 1} were provided.")
-        hold_console_for_input()
     main()
