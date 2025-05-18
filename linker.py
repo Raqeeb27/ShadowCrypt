@@ -87,12 +87,20 @@ def main(hashed_name: str) -> None:
 
     if ext in app_path_dict.get("photo", {}).get("ext", []):
         arg = app_path_dict["photo"].get("arg", "")
-        cmd = f"{app} {arg} {hidden_name}"
+        cmd = [app] + ([arg] if arg else []) + [hidden_name]
     else:
         cmd = [app, hidden_name]
 
-    print("[*] Executing command:", cmd)
-    subprocess.Popen(cmd)
+    print("\n[*] Executing command:", cmd)
+    try:
+        proc = subprocess.Popen(cmd)
+        # If running as a bundled app (PyInstaller), wait for subprocess to finish
+        if getattr(sys, 'frozen', False):
+            proc.wait()
+    except Exception as e:
+        print(f"\n[!] Failed to launch application: {e}")
+        hold_console_for_input()
+        sys.exit(1)
 
 
 if __name__ == "__main__":
