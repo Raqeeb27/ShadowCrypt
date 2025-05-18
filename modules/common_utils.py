@@ -140,9 +140,9 @@ def move_file(src_path: str, dest_path: str) -> bool:
     error_code = GetLastError()
 
     if error_code == 5:
-        print(f"\n[!] Access Denied for {src_path}: Check file/folder permissions or run as administrator.\n")
+        print(f"\n[!] Access Denied for {src_path}: Check file/folder permissions or run as administrator.")
     elif error_code == 32:
-        print(f"\n[!] File is in use by another process {src_path}. Close the file and try again.\n")
+        print(f"\n[!] File is in use by another process {src_path}. Close the file and try again.")
     else:
         print(f"\n[!] Failed with error code {error_code}\n")
 
