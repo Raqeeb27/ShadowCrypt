@@ -59,7 +59,7 @@ def main(hashed_name: str) -> None:
 
     hidden_name = hash_table[hashed_name]
     if not os.path.exists(hidden_name):
-        print("[-] Hidden file does not exist.")
+        print("[-] Hidden file for the provided hash name not found.")
         hold_console_for_input()
         sys.exit(1)
 
@@ -72,7 +72,7 @@ def main(hashed_name: str) -> None:
     ext = file_name.split(".")[-1]
     app = ext_to_app_path(ext, app_path_dict)
     if not app:
-        print("[-] No application mapped for the file extension.")
+        print(f"[-] No application mapped for the file extension `{ext}`")
         hold_console_for_input()
         sys.exit(1)
 

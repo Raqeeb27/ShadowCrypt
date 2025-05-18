@@ -73,12 +73,12 @@ def preprocessing() -> dict[str, str]:
     for key in list(APP_PATH_DB.keys()):
         app = APP_PATH_DB.get(key)
         if not os.path.exists(app.get("path", "")):
-            print(f"[-] {key} application doesn't exist.")
+            print(f"[-] Application path for '{key}' does not exist.")
             APP_PATH_DB.pop(key)
         else:
             for ext in app.get("ext", []):
                 ext_icon_dict[ext] = os.path.join(DIR_PATH, "icon", app.get("ico", ""))
-    print(f"[*] Supported Extensions: {ext_icon_dict.keys()}\n")
+    print(f"[*] Supported Extensions:\n{ext_icon_dict.keys()}\n")
     return ext_icon_dict
 
 
@@ -161,7 +161,7 @@ def make_shortcut(file_path: str, ext_icon_dict: dict[str, str],
         MAPPING_DB.mapping_dict[hidden_file_path] = file_path
         MAPPING_DB.hash_table[hashed_name] = hidden_file_path
 
-        print(f"  [+] Hiding success: {file_path} -> {hidden_file_path}")
+        print(f"    [+] Hiding success: {file_path} -> {hidden_file_path}")
         return hidden_file_path
 
     except (ValueError, OSError) as e:
@@ -220,11 +220,11 @@ def main(is_test: bool = False, files: list[str] = None) -> None:
 
     elif files:
         for file in files:
+            if not os.path.isfile(file):
+                print(f"[-] Invalid File: '{file}' does not exist or is not a file.")
+                continue
             if file.endswith(".lnk"):
                 print(f"[-] Error {file}: .lnk file cannot be hidden.")
-                continue
-            if not (os.path.exists(file) and os.path.isfile(file)):
-                print(f"[-] Invalid File: '{file}' does not exist or is not a file.")
                 continue
             target_list.append(make_shortcut(file, ext_icon_dict))
 
@@ -271,7 +271,7 @@ if __name__ == "__main__":
 
     elif args.files:
         if not any(os.path.isfile(file) for file in args.files):
-            print("\n[-] Invalid file paths provided. Some files do not exist or are not valid files.")
+            print("\n[-] Invalid file paths provided. No valid files found.")
             hold_console_for_input()
             sys.exit(1)
         if all(file.endswith(".lnk") for file in args.files):

@@ -216,7 +216,7 @@ def recovery(hidden_file: str, mapping_dict: dict[str, str],
         mapping_dict.pop(hidden_file, None)
         h_name = hash_name(hidden_file)
         hash_table.pop(h_name, None)
-        print(f"  [+] Recovered: {hidden_file} -> {original_file}")
+        print(f"    [+] Recovered: {hidden_file} -> {original_file}")
         return True
 
     except (ValueError, OSError) as e:
@@ -290,7 +290,7 @@ def main(hashed_name: str | None = None, files: list | None = None,
                 if not recovered:
                     print(f"[-] Failed to recover {hidden_file}.")
             else:
-                print("[-] Provided hash not found.")
+                print(f"[-] Provided hash not found for the shortcut file {file_path}.")
                 continue
 
     data["mapping_table"] = mapping_dict
@@ -331,7 +331,7 @@ if __name__ == "__main__":
 
     elif args.link_files:
         if not any(os.path.isfile(file) for file in args.link_files):
-            print("[-] Invalid file paths provided. Some files do not exist or are not valid files.")
+            print("[-] Invalid file paths provided. No valid lnk files found.")
             hold_console_for_input()
             sys.exit(1)
         if not any(file.endswith(".lnk") for file in args.link_files):

@@ -166,6 +166,7 @@ def load_encrypted_data(filepath: str, aes: AESCipher,
                 time.sleep(WAIT_TIME)
         except (ValueError, OSError, TypeError) as e:
             print(f"[-] Decryption error: {e}")
+            print("[!] The database file may be corrupted or tampered with.")
             hold_console_for_input()
             sys.exit(1)
 

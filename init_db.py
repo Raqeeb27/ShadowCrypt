@@ -3,7 +3,6 @@
 This script initializes the application's database by:
 - Encrypting the contents of "mapping.db" using a password provided by the user.
 - Writing the encrypted mapping data to "enc_mapping.dll" to help protect it from ransomware attacks.
-- Reading "app_path.json", replacing a username placeholder with the current user's login name, validating the existence of each application path, and writing the updated data to "app_path.dll".
 - Warning the user if any application paths in "app_path.json" do not exist.
 - Using ".dll" file extensions for database files to reduce the risk of them being targeted by ransomware.
 
