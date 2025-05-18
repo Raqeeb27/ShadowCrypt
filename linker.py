@@ -110,6 +110,6 @@ if __name__ == "__main__":
         hold_console_for_input()
         sys.exit(1)
 
-    print("[*] Opening the file...\n")
+    print("\n[*] Opening the file...\n")
 
     main(hashed_name=args.hash)

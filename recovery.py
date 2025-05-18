@@ -220,7 +220,7 @@ def recovery(hidden_file: str, mapping_dict: dict[str, str],
         return True
 
     except (ValueError, OSError) as e:
-        print(f"[-] Failed to recover {hidden_file}: {e}")
+        print(f"[-] Failed to recover {hidden_file}: {e}\n")
         return None
 
 
@@ -317,37 +317,37 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if sum([bool(args.hash), bool(args.link_files), bool(args.all), bool(args.testbed), bool(args.dir)]) > 1:
-        print("[-] Only one of --all, --hash, --link_file_path, --testbed or --dir can be used at a time.")
+        print("\n[-] Only one of --all, --hash, --link_file_path, --testbed or --dir can be used at a time.")
         hold_console_for_input()
         sys.exit(1)
 
     if args.recursive and not args.dir:
-        print("[-] The -R/--recursive option can only be used with --dir.")
+        print("\n[-] The -R/--recursive option can only be used with --dir.")
         hold_console_for_input()
         sys.exit(1)
 
     if args.hash:
-        print(f"[+] Recovering file with hash: {args.hash}\n")
+        print(f"\n[+] Recovering file with hash: {args.hash}\n")
 
     elif args.link_files:
         if not any(os.path.isfile(file) for file in args.link_files):
-            print("[-] Invalid file paths provided. No valid lnk files found.")
+            print("\n[-] Invalid file paths provided. No valid lnk files found.")
             hold_console_for_input()
             sys.exit(1)
         if not any(file.endswith(".lnk") for file in args.link_files):
-            print("[-] Invalid file paths provided. Only `.lnk` files can be recovered.")
+            print("\n[-] Invalid file paths provided. Only `.lnk` files can be recovered.")
             hold_console_for_input()
             sys.exit(1)
         print("\n[+] Recovering files: ")
         print("\n".join(args.link_files),"\n")
 
     elif args.all:
-        print("[*] Recovering all hidden files...\nThis may take a while.\n")
+        print("\n[*] Recovering all hidden files...\nThis may take a while.\n")
 
     elif args.testbed:
         args.dir = os.path.join(get_dir_path(), "testbed")
         args.recursive = False
-        print("[*] Recovering all .lnk files in the testbed directory...\n")
+        print("\n[*] Recovering all .lnk files in the testbed directory...\n")
 
     elif args.dir:
         args.dir = os.path.abspath(args.dir)
@@ -357,9 +357,9 @@ if __name__ == "__main__":
             hold_console_for_input()
             sys.exit(1)
         if args.recursive:
-            print(f"[*] Recovering all hidden files in {args.dir} and its subdirectories...\n")
+            print(f"\n[*] Recovering all hidden files in {args.dir} and its subdirectories...\n")
         else:
-            print(f"[*] Recovering all hidden files in the directory: {args.dir}\n")
+            print(f"\n[*] Recovering all hidden files in the directory: {args.dir}\n")
 
     main(args.hash, args.link_files, args.all, args.dir, args.recursive)
     time.sleep(1)
