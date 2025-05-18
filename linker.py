@@ -93,10 +93,7 @@ def main(hashed_name: str) -> None:
 
     print("\n[*] Executing command:", cmd)
     try:
-        proc = subprocess.Popen(cmd)
-        # If running as a bundled app (PyInstaller), wait for subprocess to finish
-        if getattr(sys, 'frozen', False):
-            proc.wait()
+        subprocess.Popen(cmd)
     except Exception as e:
         print(f"\n[!] Failed to launch application: {e}")
         hold_console_for_input()
