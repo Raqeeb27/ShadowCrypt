@@ -75,7 +75,7 @@ def run_init_db():
 
     if not should_reinitialize_db():
         try:
-            user_input = input("\n[!] Do you want to reinitialize the database?\nWarning: This will overwrite the existing databases.\nType 'yes' to continue: ").strip().lower()
+            user_input = input("\n[!] Do you want to reinitialize the database?\n**Recommended** - Recover all the hidden files first!\nWarning: This will overwrite the existing databases.\nType 'yes' to continue: ").strip().lower()
             if user_input not in ["yes", "y"]:
                 print("\n[-] Reinitialization aborted.")
                 hold_console_for_input()
