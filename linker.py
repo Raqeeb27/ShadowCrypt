@@ -91,7 +91,7 @@ def main(hashed_name: str) -> None:
     else:
         cmd = [app, hidden_name]
 
-    print("\n[*] Executing command:", cmd)
+    print("[*] Executing command:", cmd)
     try:
         subprocess.Popen(cmd)
     except Exception as e:
