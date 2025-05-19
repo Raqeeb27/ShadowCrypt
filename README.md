@@ -4,6 +4,7 @@
 
 ![ShadowCrypt Logo](images/ShadowCrypt_README_image.jpg)
 
+<br>
 
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)&nbsp;&nbsp;&nbsp;&nbsp;
 ![Python Badge](https://img.shields.io/badge/Python-badge?style=for-the-badge)
@@ -13,7 +14,11 @@
 
 </div>
 
+<br>
+
 ### Proactive ransomware defense and secure file hiding for Windows. Effortlessly protect, access, and recover sensitive files using encrypted mappings and smart shortcuts.
+
+<br>
 
 ## Original Research
 
@@ -25,6 +30,7 @@ This project is based on the research paper:
 * **📌 Original Implementation:** [hanXen/ransomware_protect_linker](https://github.com/hanXen/ransomware_protect_linker)
 * 🔗 [Read the Full Paper Here](https://doi.org/10.1109/ACCESS.2023.3309879)
 
+<br>
 
 ## **⭐ Underlying Concept**
 
