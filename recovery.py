@@ -238,7 +238,8 @@ def main(hashed_name: str | None = None, files: list | None = None,
     """
     aes = AESCipher()
 
-    enc_mapping_filepath = os.path.join(get_dir_path(), "db", "enc_mapping.dll")
+    username = os.getlogin()
+    enc_mapping_filepath = os.path.join(get_dir_path(), "db", f"enc_{username}_mapping.dll")
     raw_data, pw = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
     data = json.loads(raw_data.replace("'", '"'))
 

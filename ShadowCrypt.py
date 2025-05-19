@@ -49,7 +49,8 @@ def should_reinitialize_db():
     Returns True if reinitialization is needed, otherwise False.
     """
     db_dir = os.path.join(get_dir_path(), "db")
-    required_files = ["enc_mapping.dll", "app_path.dll"]
+    username = os.getlogin()
+    required_files = [f"enc_{username}_mapping.dll", "app_path.dll"]
 
     for file in required_files:
         file_path = os.path.join(db_dir, file)

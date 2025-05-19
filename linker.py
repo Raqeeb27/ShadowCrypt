@@ -46,7 +46,8 @@ def main(hashed_name: str) -> None:
 
     app_path_dict = load_json(os.path.join(dir_path, "db", "app_path.dll"))
 
-    enc_mapping_filepath = os.path.join(dir_path, "db", "enc_mapping.dll")
+    username = os.getlogin()
+    enc_mapping_filepath = os.path.join(dir_path, "db", f"enc_{username}_mapping.dll")
     raw_data, _ = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
     data = json.loads(raw_data.replace("'", '"'))
     mapping_dict = data["mapping_table"]

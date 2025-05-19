@@ -2,7 +2,7 @@
 
 This script initializes the application's database by:
 - Encrypting the contents of "mapping.db" using a password provided by the user.
-- Writing the encrypted mapping data to "enc_mapping.dll" to help protect it from ransomware attacks.
+- Writing the encrypted mapping data to "enc_<username>_mapping.dll" to help protect it from ransomware attacks.
 - Warning the user if any application paths in "app_path.json" do not exist.
 - Using ".dll" file extensions for database files to reduce the risk of them being targeted by ransomware.
 
@@ -12,7 +12,7 @@ Modules used:
 - Secure password input and validation.
 
 Output files:
-- db/enc_mapping.dll: Encrypted mapping database.
+- db/enc_<username>_mapping.dll: Encrypted mapping database.
 - db/app_path.dll: Application path data (not encrypted).
 """
 
@@ -21,7 +21,7 @@ import sys
 import json
 
 from modules.aes import AESCipher
-from modules.common_utils import get_dir_path, read_file, write_file, hold_console_for_input
+from modules.common_utils import get_dir_path, read_file, write_file
 from modules.security_utils import get_verified_password
 
 
@@ -59,7 +59,8 @@ def main() -> None:
     mapping_data = read_file(os.path.join(dir_path, "db", "mapping.db"))
 
     enc_mapping = aes.encrypt(mapping_data, pw)
-    write_file(os.path.join(dir_path, "db", "enc_mapping.dll"), enc_mapping)
+    username = os.getlogin()
+    write_file(os.path.join(dir_path, "db", f"enc_{username}_mapping.dll"), enc_mapping)
 
 
 if __name__ == "__main__":
