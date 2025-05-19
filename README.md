@@ -64,7 +64,7 @@ This project provides an enhanced and more user-friendly implementation of a pro
     * Hidden files within a specific directory.
     * Hidden files within a specific directory and all its subdirectories (recursive recovery).
 * **Right-Click Menu Integration:** Provides convenient right-click menu options for core functionalities, enabling easy access without the need for command-line interaction.
-* **Simplified Setup:** Features an easy installation process via a standalone executable (available in the releases).
+* **Simplified Setup:** Features an easy installation process via a standalone executable (available in the [releases](https://github.com/Raqeeb27/ShadowCrypt/releases).
 
 This project aims to make robust ransomware defense and secure file management more accessible and efficient for Windows users.
 
@@ -80,6 +80,8 @@ To run this project on your Windows system, ensure the following are installed:
     ```bash
     pip install uv
     ```
+<br>
+
 **Install Supported Softwares (for broader file format support):**
 
 This project supports secure hiding and recovery of various file formats by leveraging external applications. Installing these applications will ensure a seamless experience with a wider range of files:
@@ -96,7 +98,7 @@ This project supports secure hiding and recovery of various file formats by leve
 
 > Before proceeding with the installation, please ensure you have the necessary [prerequisites](#prerequisites) installed.
 
-⭐ **Easy Installation via Standalone Executable:** For the simplest installation, you can download and run the latest release of the project. Visit the [executables page](link-to-your-releases-page) to download the standalone executable. Running this will guide you through the installation process.
+⭐ **Easy Installation via Standalone Executable:** For the simplest installation, you can download and run the latest release of the project. Visit the [release page](https://github.com/Raqeeb27/ShadowCrypt/releases) to download the standalone executable. Running this will guide you through the installation process.
 
 **Alternatively, you can install from the source code:**
 
