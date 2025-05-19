@@ -150,6 +150,7 @@ def load_encrypted_data(filepath: str, aes: AESCipher,
     while attempts < MAX_ATTEMPTS:
         try:
             pw = getpass.getpass(prompt)
+            print()
         except (KeyboardInterrupt, EOFError):
             print("\n[!] Keyboard Interrupt")
             hold_console_for_input()

@@ -78,7 +78,7 @@ def preprocessing() -> dict[str, str]:
         else:
             for ext in app.get("ext", []):
                 ext_icon_dict[ext] = os.path.join(DIR_PATH, "icon", app.get("ico", ""))
-    print(f"[*] Supported Extensions:\n{ext_icon_dict.keys()}\n")
+    print(f"[*] Supported Extensions:\n{[ext for ext in ext_icon_dict.keys()]}\n")
     return ext_icon_dict
 
 
