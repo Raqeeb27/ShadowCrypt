@@ -170,6 +170,8 @@ def main():
         subprocess.run(command, check=True)
     except subprocess.CalledProcessError as e:
         sys.exit(1)
+    except (KeyboardInterrupt, EOFError):
+        sys.exit(1)
 
 
 if __name__ == "__main__":

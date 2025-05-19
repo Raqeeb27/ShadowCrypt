@@ -107,15 +107,21 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     parser.add_argument("--hash", help="Hashed filename")
-    args = parser.parse_args()
 
-    if not args.hash:
-        print("\n[-] No hash provided.")
-        f = "ShadowCrypt.exe link" if getattr(sys, 'frozen', False) else "linker.py"
-        print(f"[*] Usage: {f} --hash <hashed_filename>")
+    try:
+        args = parser.parse_args()
+
+        if not args.hash:
+            print("\n[-] No hash provided.")
+            f = "ShadowCrypt.exe link" if getattr(sys, 'frozen', False) else "linker.py"
+            print(f"[*] Usage: {f} --hash <hashed_filename>")
+            hold_console_for_input()
+            sys.exit(1)
+
+        print("\n[*] Opening the file...\n")
+        main(hashed_name=args.hash)
+
+    except (KeyboardInterrupt, EOFError):
+        print("\n\n[-] Keyboard Interrupt")
         hold_console_for_input()
         sys.exit(1)
-
-    print("\n[*] Opening the file...\n")
-
-    main(hashed_name=args.hash)

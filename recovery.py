@@ -55,6 +55,10 @@ def process_link_file(link_file_path: str, verbose: bool = True) -> str | None:
     except (OSError, ValueError, pylnk3.FormatException) as e:
         if verbose:
             print(f"\n[!] Error processing shortcut {link_file_path}: {e}")
+    except (KeyboardInterrupt, EOFError):
+        print("\n[!] Search interrupted by user.")
+        hold_console_for_input()
+        sys.exit(1)
     return None
 
 
@@ -308,59 +312,65 @@ if __name__ == "__main__":
     parser.add_argument("--dir", type=str, help="Recover all hidden files in the specified directory. Use -R for recursive search.")
     parser.add_argument("-R", "--recursive", action="store_true", help=argparse.SUPPRESS)
 
-    args = parser.parse_args()
+    try:
+        args = parser.parse_args()
 
-    if not any([args.hash, args.link_files, args.all, args.testbed, args.dir]):
-        print("\n[-] No arguments provided.")
-        f = "ShadowCrypt.exe recover" if getattr(sys, 'frozen', False) else "recovery.py"
-        print(f"[*] Usage: {f} --all OR --hash <hash>\nOR --link_file_path <link_file_path> OR --testbed OR --dir <dir_path>")
-        hold_console_for_input()
-        sys.exit(1)
-
-    if sum([bool(args.hash), bool(args.link_files), bool(args.all), bool(args.testbed), bool(args.dir)]) > 1:
-        print("\n[-] Only one of --all, --hash, --link_file_path, --testbed or --dir can be used at a time.")
-        hold_console_for_input()
-        sys.exit(1)
-
-    if args.recursive and not args.dir:
-        print("\n[-] The -R/--recursive option can only be used with --dir.")
-        hold_console_for_input()
-        sys.exit(1)
-
-    if args.hash:
-        print(f"\n[+] Recovering file with hash: {args.hash}\n")
-
-    elif args.link_files:
-        if not any(os.path.isfile(file) for file in args.link_files):
-            print("\n[-] Invalid file paths provided. No valid lnk files found.")
+        if not any([args.hash, args.link_files, args.all, args.testbed, args.dir]):
+            print("\n[-] No arguments provided.")
+            f = "ShadowCrypt.exe recover" if getattr(sys, 'frozen', False) else "recovery.py"
+            print(f"[*] Usage: {f} --all OR --hash <hash>\nOR --link_file_path <link_file_path> OR --testbed OR --dir <dir_path>")
             hold_console_for_input()
             sys.exit(1)
-        if not any(file.endswith(".lnk") for file in args.link_files):
-            print("\n[-] Invalid file paths provided. Only `.lnk` files can be recovered.")
+
+        if sum([bool(args.hash), bool(args.link_files), bool(args.all), bool(args.testbed), bool(args.dir)]) > 1:
+            print("\n[-] Only one of --all, --hash, --link_file_path, --testbed or --dir can be used at a time.")
             hold_console_for_input()
             sys.exit(1)
-        print("\n[+] Recovering files: ")
-        print("\n".join(args.link_files),"\n")
 
-    elif args.all:
-        print("\n[*] Recovering all hidden files...\nThis may take a while.\n")
-
-    elif args.testbed:
-        args.dir = os.path.join(get_dir_path(), "testbed")
-        args.recursive = False
-        print("\n[*] Recovering all .lnk files in the testbed directory...\n")
-
-    elif args.dir:
-        args.dir = os.path.abspath(args.dir)
-        args.dir = args.dir[:-2] if args.dir.endswith(":\\\"") else args.dir
-        if not os.path.isdir(args.dir):
-            print(f"\n[!] Invalid directory: {args.dir}")
+        if args.recursive and not args.dir:
+            print("\n[-] The -R/--recursive option can only be used with --dir.")
             hold_console_for_input()
             sys.exit(1)
-        if args.recursive:
-            print(f"\n[*] Recovering all hidden files in {args.dir} and its subdirectories...\n")
-        else:
-            print(f"\n[*] Recovering all hidden files in the directory: {args.dir}\n")
 
-    main(args.hash, args.link_files, args.all, args.dir, args.recursive)
-    time.sleep(1)
+        if args.hash:
+            print(f"\n[+] Recovering file with hash: {args.hash}\n")
+
+        elif args.link_files:
+            if not any(os.path.isfile(file) for file in args.link_files):
+                print("\n[-] Invalid file paths provided. No valid lnk files found.")
+                hold_console_for_input()
+                sys.exit(1)
+            if not any(file.endswith(".lnk") for file in args.link_files):
+                print("\n[-] Invalid file paths provided. Only `.lnk` files can be recovered.")
+                hold_console_for_input()
+                sys.exit(1)
+            print("\n[+] Recovering files: ")
+            print("\n".join(args.link_files),"\n")
+
+        elif args.all:
+            print("\n[*] Recovering all hidden files...\nThis may take a while.\n")
+
+        elif args.testbed:
+            args.dir = os.path.join(get_dir_path(), "testbed")
+            args.recursive = False
+            print("\n[*] Recovering all .lnk files in the testbed directory...\n")
+
+        elif args.dir:
+            args.dir = os.path.abspath(args.dir)
+            args.dir = args.dir[:-2] if args.dir.endswith(":\\\"") else args.dir
+            if not os.path.isdir(args.dir):
+                print(f"\n[!] Invalid directory: {args.dir}")
+                hold_console_for_input()
+                sys.exit(1)
+            if args.recursive:
+                print(f"\n[*] Recovering all hidden files in {args.dir} and its subdirectories...\n")
+            else:
+                print(f"\n[*] Recovering all hidden files in the directory: {args.dir}\n")
+
+        main(args.hash, args.link_files, args.all, args.dir, args.recursive)
+        time.sleep(1)
+
+    except (KeyboardInterrupt, EOFError):
+        print("\n[!] Keyboard Interrupt")
+        hold_console_for_input()
+        sys.exit(1)

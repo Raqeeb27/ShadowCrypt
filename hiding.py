@@ -246,39 +246,46 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--files", nargs="+", help="Hide multiple files (provide full paths)")
     parser.add_argument("--testbed", action="store_true", help="Hide all files in testbed folder")
-    args = parser.parse_args()
 
-    if not (args.testbed or args.files):
-        print("\n[-] No arguments provided.")
-        f = "ShadowCrypt.exe hide" if getattr(sys, 'frozen', False) else "hiding.py"
-        print(f"[*] Usage: {f} --files <file1 file2 ...> OR --testbed")
+    try:
+        args = parser.parse_args()
+
+        if not (args.testbed or args.files):
+            print("\n[-] No arguments provided.")
+            f = "ShadowCrypt.exe hide" if getattr(sys, 'frozen', False) else "hiding.py"
+            print(f"[*] Usage: {f} --files <file1 file2 ...> OR --testbed")
+            hold_console_for_input()
+            sys.exit(1)
+
+        if sum([bool(args.testbed), bool(args.files)]) > 1:
+            print("\n[-] Only one of --files OR --testbed can be used at a time.")
+            hold_console_for_input()
+            sys.exit(1)
+
+        if args.testbed:
+            if not os.path.exists(os.path.join(DIR_PATH, "testbed")):
+                print("\n[-] Testbed folder does not exist.")
+                hold_console_for_input()
+                sys.exit(1)
+
+            print("[*] Hiding all files in testbed folder.\n")
+
+        elif args.files:
+            if not any(os.path.isfile(file) for file in args.files):
+                print("\n[-] Invalid file paths provided. No valid files found.")
+                hold_console_for_input()
+                sys.exit(1)
+            if all(file.endswith(".lnk") for file in args.files):
+                print("\n[-] Invalid file paths provided. `.lnk` files cannot be hidden.")
+                hold_console_for_input()
+                sys.exit(1)
+            print("\n[*] Hiding files:")
+            print("\n".join(args.files),"\n")
+
+        main(args.testbed, args.files)
+        time.sleep(1)
+
+    except (KeyboardInterrupt, EOFError):
+        print("\n[!] Keyboard Interrupt")
         hold_console_for_input()
         sys.exit(1)
-
-    if sum([bool(args.testbed), bool(args.files)]) > 1:
-        print("\n[-] Only one of --files OR --testbed can be used at a time.")
-        hold_console_for_input()
-        sys.exit(1)
-
-    if args.testbed:
-        if not os.path.exists(os.path.join(DIR_PATH, "testbed")):
-            print("\n[-] Testbed folder does not exist.")
-            hold_console_for_input()
-            sys.exit(1)
-
-        print("[*] Hiding all files in testbed folder.\n")
-
-    elif args.files:
-        if not any(os.path.isfile(file) for file in args.files):
-            print("\n[-] Invalid file paths provided. No valid files found.")
-            hold_console_for_input()
-            sys.exit(1)
-        if all(file.endswith(".lnk") for file in args.files):
-            print("\n[-] Invalid file paths provided. `.lnk` files cannot be hidden.")
-            hold_console_for_input()
-            sys.exit(1)
-        print("\n[*] Hiding files:")
-        print("\n".join(args.files),"\n")
-
-    main(args.testbed, args.files)
-    time.sleep(1)
