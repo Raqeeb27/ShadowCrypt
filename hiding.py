@@ -141,11 +141,9 @@ def make_shortcut(file_path: str, ext_icon_dict: dict[str, str],
         if not move_status:
             return None
 
-        # executable (for release)
         if getattr(sys, "frozen", False):
             target_path = os.path.join(DIR_PATH, "dist", "ShadowCrypt.exe")
             arguments = f"link --hash {hashed_name}"
-        # python script (for test)
         else:
             target_path = sys.executable
             arguments = f"\"{os.path.join(DIR_PATH, 'linker.py')}\" --hash {hashed_name}"
