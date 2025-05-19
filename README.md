@@ -4,8 +4,14 @@
 
 ![ShadowCrypt Logo](images/ShadowCrypt_README_image.jpg)
 
-</div>
 
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)&nbsp;&nbsp;&nbsp;&nbsp;
+![Python Badge](https://img.shields.io/badge/Python-badge?style=for-the-badge)
+![UV Badge](https://img.shields.io/badge/UV-badge?style=for-the-badge&color=%236200EA)
+![Powershell Badge](https://img.shields.io/badge/Powershell-badge?style=for-the-badge&color=%23012456)  
+![GitHub release](https://img.shields.io/github/v/release/Raqeeb27/ShadowCrypt?style=for-the-badge)
+
+</div>
 
 ### Proactive ransomware defense and secure file hiding for Windows. Effortlessly protect, access, and recover sensitive files using encrypted mappings and smart shortcuts.
 
@@ -26,6 +32,7 @@ This project leverages a key observation about ransomware behavior: it often avo
 
 To maintain ease of access to these hidden files, this project utilizes Windows shortcut files (also known as link files), providing a seamless way for users to open and manage their protected data.
 
+<br>
 
 ## Table of Contents
 
@@ -38,6 +45,7 @@ To maintain ease of access to these hidden files, this project utilizes Windows 
 * [License](#license)
 * [Acknowledgements](#acknowledgements)
 
+<br>
 
 ## About This Improved Project
 
@@ -54,6 +62,7 @@ This project provides an enhanced and more user-friendly implementation of a pro
 
 This project aims to make robust ransomware defense and secure file management more accessible and efficient for Windows users.
 
+<br>
 
 ## Prerequisites
 
@@ -65,12 +74,6 @@ To run this project on your Windows system, ensure the following are installed:
     ```bash
     pip install uv
     ```
-
-
-## Installation
-
-Before proceeding with the installation, please ensure you have the necessary [prerequisites](#prerequisites) installed.
-
 **Install Supported Softwares (for broader file format support):**
 
 This project supports secure hiding and recovery of various file formats by leveraging external applications. Installing these applications will ensure a seamless experience with a wider range of files:
@@ -81,7 +84,11 @@ This project supports secure hiding and recovery of various file formats by leve
 
 **Note:** Ensure these applications are installed in their default locations for automatic path detection. You can optionally verify or manually configure the application paths later in the [`app_path.json`](db/app_path.json) file.
 
-**Steps to Install the Project:**
+<br>
+
+## Installation
+
+> Before proceeding with the installation, please ensure you have the necessary [prerequisites](#prerequisites) installed.
 
 ⭐ **Easy Installation via Standalone Executable:** For the simplest installation, you can download and run the latest release of the project. Visit the [executables page](link-to-your-releases-page) to download the standalone executable. Running this will guide you through the installation process.
 
@@ -103,11 +110,12 @@ This project supports secure hiding and recovery of various file formats by leve
     * Create executables for easier execution.
 
 3.  **Set up Right-Click Menu Options (Run as Administrator):**
-    To enable convenient right-click menu options for easy access to the project's functionalities, run the following batch script as an administrator:
+    To enable convenient right-click menu options for easy access to the project's functionalities, run the following batch script as an administrator :
     ```batch
-    .\Set-RightClick.bat
+    Set-RightClick.bat
     ```
 
+<br>
 
 ## Usage
 
@@ -144,6 +152,7 @@ Once the installation is complete (either via the standalone executable or from 
 * Right-click on an empty area within the folder in File Explorer (on Windows 11, you might need to click "Show more options").
 * Select "**Recover Files Recursively (Include SubFolders)**" from the context menu.
 
+<br>
 
 ## Uninstallation
 
@@ -154,7 +163,7 @@ Once the installation is complete (either via the standalone executable or from 
 To remove the right-click menu options from your system, run the following batch file as an administrator:
 
 ```batch
-.\Remove-RightClick.bat
+Remove-RightClick.bat
 ```
 
 After running this script, you can manually delete the cloned repository folder if you wish to remove the project files entirely.
@@ -167,10 +176,12 @@ After running this script, you can manually delete the cloned repository folder 
 4.  **Run the `Remove-RightClickMenuOptions.bat` file as an administrator** to remove the right-click menu options from your system.
 5.  After running the batch file, the application files should be fully removed from your system by the uninstaller.
 
+<br>
 
 ## License
 This project follows the license of the original repository. See the [LICENSE](LICENSE) file for details.
 
+<br>
 
 ## Acknowledgements
 
