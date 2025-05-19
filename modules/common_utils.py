@@ -58,6 +58,9 @@ def read_file(filepath: str) -> str:
     Returns:
         str: The content of the file.
     """
+    if not os.path.exists(filepath):
+        print(f"[!] File not found: {filepath}")
+        sys.exit(1)
     lock = FileLock(f"{filepath}.lock")
     with lock:
         with open(filepath, "r", encoding="utf-8") as f:
