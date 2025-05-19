@@ -7,7 +7,7 @@
 </div>
 
 
-**Proactive ransomware defense and secure file hiding for Windows.** Effortlessly protect, access, and recover sensitive files using encrypted mappings and smart shortcuts.
+### Proactive ransomware defense and secure file hiding for Windows. Effortlessly protect, access, and recover sensitive files using encrypted mappings and smart shortcuts.
 
 ## Original Research
 
@@ -20,11 +20,11 @@ This project is based on the research paper:
 * 🔗 [Read the Full Paper Here](https://doi.org/10.1109/ACCESS.2023.3309879)
 
 
-## **⭐ Key Concept**
+## **⭐ Underlying Concept**
 
-**The main idea**: _Most ransomware does not target system files like `.exe` or `.dll`, or system file directories (e.g., `Program Files`, `Windows`)._ By camouflaging files with these types of extensions and hiding them in system file directories, we can safeguard valuable data from ransomware attacks in a cost-effective manner.
+This project leverages a key observation about ransomware behavior: it often avoids targeting system files (like `.exe` or `.dll`) and their directories (e.g., `Program Files`, `Windows`). The core idea, inspired by the original work, is to protect valuable data cost-effectively by camouflaging files with system-like extensions and hiding them within system file directories.
 
-To solve usability challenges, we use Windows shortcut files (a.k.a. link files) to provide seamless access to hidden files.
+To maintain ease of access to these hidden files, this project utilizes Windows shortcut files (also known as link files), providing a seamless way for users to open and manage their protected data.
 
 
 ## Table of Contents
@@ -54,6 +54,7 @@ This project provides an enhanced and more user-friendly implementation of a pro
 
 This project aims to make robust ransomware defense and secure file management more accessible and efficient for Windows users.
 
+
 ## Prerequisites
 
 To run this project on your Windows system, ensure the following are installed:
@@ -64,6 +65,7 @@ To run this project on your Windows system, ensure the following are installed:
     ```bash
     pip install uv
     ```
+
 
 ## Installation
 
@@ -106,6 +108,7 @@ This project supports secure hiding and recovery of various file formats by leve
     .\Set-RightClick.bat
     ```
 
+
 ## Usage
 
 Once the installation is complete (either via the standalone executable or from the source code), you can easily interact with the project using the integrated right-click menu options. After selecting the desired option, you may encounter User Account Control (UAC) prompts; click "Yes" to proceed. A command window will then appear, prompting you to enter the password you set during the installation.
@@ -141,6 +144,7 @@ Once the installation is complete (either via the standalone executable or from 
 * Right-click on an empty area within the folder in File Explorer (on Windows 11, you might need to click "Show more options").
 * Select "**Recover Files Recursively (Include SubFolders)**" from the context menu.
 
+
 ## Uninstallation
 
 **Important:** Before proceeding with uninstallation, ensure that you have recovered all your hidden files. The uninstallation process only removes the application and the right-click menu entries and **does not automatically recover your hidden data.**
@@ -167,8 +171,7 @@ After running this script, you can manually delete the cloned repository folder 
 ## License
 This project follows the license of the original repository. See the [LICENSE](LICENSE) file for details.
 
+
 ## Acknowledgements
 
-This project gratefully acknowledges the foundational work of the authors of the research paper "**An Efficient and Flexible Ransomware Protection Scheme Based on Dynamic Trusted Linking**" and the initial open-source implementation by [hanXen](https://github.com/hanXen). Their contributions provided the inspiration and improvements for this project.
-
-We would also like to thank [mention any other individuals, libraries, or resources you used].
+This project gratefully acknowledges the foundational work of the authors of the research paper "**Hiding in the Crowd: Ransomware Protection by Adopting Camouflage and Hiding Strategy With the Link File**" and the initial implementation by [hanXen](https://github.com/hanXen). Their research provided the inspiration and improvements for this project.
