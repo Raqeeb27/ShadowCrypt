@@ -54,6 +54,10 @@ class MappingDB:
 MAX_TRIES = 100
 DIR_PATH = get_dir_path()
 MAPPING_DB = MappingDB([], {}, {}, {})
+if not os.path.exists(os.path.join(DIR_PATH, "db", "app_path.dll")):
+    print("\n[-] app_path.dll file not found. Please reinitialize the database.")
+    hold_console_for_input()
+    sys.exit(1)
 APP_PATH_DB = load_json(os.path.join(DIR_PATH, "db", "app_path.dll"))
 
 

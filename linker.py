@@ -44,6 +44,10 @@ def main(hashed_name: str) -> None:
     dir_path = get_dir_path()
     aes = AESCipher()
 
+    if not os.path.exists(os.path.join(dir_path, "db", "app_path.dll")):
+        print("\n[-] app_path.dll file not found. Please reinitialize the database.")
+        hold_console_for_input()
+        sys.exit(1)
     app_path_dict = load_json(os.path.join(dir_path, "db", "app_path.dll"))
 
     username = os.getlogin()

@@ -14,6 +14,7 @@ Functions:
 - postprocessing: Encrypts and writes a dictionary to a specified file path.
 """
 
+import os
 import sys
 import json
 import time
@@ -146,6 +147,11 @@ def load_encrypted_data(filepath: str, aes: AESCipher,
     Raises:
         SystemExit: If decryption fails after maximum attempts.
     """
+    if not os.path.exists(filepath):
+        print(f"\n[!] Database file not found!")
+        hold_console_for_input()
+        sys.exit(1)
+
     attempts = 0
     while attempts < MAX_ATTEMPTS:
         try:
