@@ -1,9 +1,9 @@
+<div align="center">
+
 # <span style="vertical-align: middle;"><img src='images/ShadowCrypt_Icon.png' alt="ShadowCrypt_Icon" style="width:60px;height:auto; margin-bottom: -3px;"></span> ShadowCrypt
 
-<div align="center">
-  
 ![ShadowCrypt Logo](images/ShadowCrypt_README_image.jpg)
-  
+
 </div>
 
 
@@ -54,7 +54,7 @@ This project provides an enhanced and more user-friendly implementation of a pro
 
 This project aims to make robust ransomware defense and secure file management more accessible and efficient for Windows users.
 
-### Prerequisites
+## Prerequisites
 
 To run this project on your Windows system, ensure the following are installed:
 
@@ -65,7 +65,7 @@ To run this project on your Windows system, ensure the following are installed:
     pip install uv
     ```
 
-### Installation
+## Installation
 
 Before proceeding with the installation, please ensure you have the necessary [prerequisites](#prerequisites) installed.
 
@@ -106,7 +106,7 @@ This project supports secure hiding and recovery of various file formats by leve
     .\Set-RightClick.bat
     ```
 
-### Usage
+## Usage
 
 Once the installation is complete (either via the standalone executable or from the source code), you can easily interact with the project using the integrated right-click menu options. After selecting the desired option, you may encounter User Account Control (UAC) prompts; click "Yes" to proceed. A command window will then appear, prompting you to enter the password you set during the installation.
 
@@ -141,7 +141,7 @@ Once the installation is complete (either via the standalone executable or from 
 * Right-click on an empty area within the folder in File Explorer (on Windows 11, you might need to click "Show more options").
 * Select "**Recover Files Recursively (Include SubFolders)**" from the context menu.
 
-#### Uninstallation
+## Uninstallation
 
 **Important:** Before proceeding with uninstallation, ensure that you have recovered all your hidden files. The uninstallation process only removes the application and the right-click menu entries and **does not automatically recover your hidden data.**
 
@@ -164,10 +164,10 @@ After running this script, you can manually delete the cloned repository folder 
 5.  After running the batch file, the application files should be fully removed from your system by the uninstaller.
 
 
-### License
+## License
 This project follows the license of the original repository. See the [LICENSE](LICENSE) file for details.
 
-### Acknowledgements
+## Acknowledgements
 
 This project gratefully acknowledges the foundational work of the authors of the research paper "**An Efficient and Flexible Ransomware Protection Scheme Based on Dynamic Trusted Linking**" and the initial open-source implementation by [hanXen](https://github.com/hanXen). Their contributions provided the inspiration and improvements for this project.
 
