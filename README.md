@@ -10,12 +10,13 @@
 ![Python Badge](https://img.shields.io/badge/Python-badge?style=for-the-badge)
 ![UV Badge](https://img.shields.io/badge/UV-badge?style=for-the-badge&color=%236200EA)
 ![Powershell Badge](https://img.shields.io/badge/Powershell-badge?style=for-the-badge&color=%23012456)  
-
-</div>
+![GitHub release](https://img.shields.io/github/v/release/Raqeeb27/ShadowCrypt?style=for-the-badge)
 
 <br>
 
 ### Proactive ransomware defense and secure file hiding for Windows. Effortlessly protect, access, and recover sensitive files using encrypted mappings and smart shortcuts.
+
+</div>
 
 <br>
 
