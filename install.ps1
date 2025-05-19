@@ -26,7 +26,7 @@ if ($confirmation -ne "yes" -and $confirmation -ne "y") {
     Write-Host "`n[!] Aborting database initialization."
 }
 else {
-    $output = uv run init_db.py | ForEach-Object { Write-Host $_; $_ }
+    $output = uv run init_db.py "ShadowCrypt" | ForEach-Object { Write-Host $_; $_ }
     if ($output) {
         if ($output[-1] -eq "[-] PASSWORD ERROR" -or $output[-1] -eq "[-] Keyboard Interrupt" -or $output[-1] -eq "[-] PATH ERROR") {
             Write-Host "[!] Installation Failed!!!"
@@ -49,10 +49,10 @@ if (Test-Path "dist") {
 }
 
 uv run pyinstaller -F ShadowCrypt.py --uac-admin --manifest admin.manifest --icon=icon\ShadowCrypt.ico
-uv run pyinstaller -F hiding.py --icon=icon\ShadowCrypt.ico
-uv run pyinstaller -F recovery.py --icon=icon\ShadowCrypt.ico
-uv run pyinstaller -F linker.py --icon=icon\ShadowCrypt.ico
-uv run pyinstaller -F init_db.py --icon=icon\ShadowCrypt.ico --distpath=.
+uv run pyinstaller -F hiding.py --uac-admin --manifest admin.manifest --icon=icon\ShadowCrypt.ico
+uv run pyinstaller -F recovery.py --uac-admin --manifest admin.manifest --icon=icon\ShadowCrypt.ico
+uv run pyinstaller -F linker.py --uac-admin --manifest admin.manifest --icon=icon\ShadowCrypt.ico
+uv run pyinstaller -F init_db.py --uac-admin --manifest admin.manifest --icon=icon\ShadowCrypt.ico --distpath=.
 echo "`n---------------------------------`n"
 
 

@@ -64,4 +64,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    full_command = " ".join(sys.argv)
+    if full_command.find("ShadowCrypt") == -1:
+        print("\n[!] Warning: Running this file directly may overwrite the existing database resulting in data loss.\n**Recommended** - Recover all the hidden files first!\nProceed with caution!")
     main()
