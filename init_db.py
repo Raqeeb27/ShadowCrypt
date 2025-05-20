@@ -19,13 +19,19 @@ Output files:
 import os
 import sys
 import json
+import time
 
-from modules.aes import AESCipher
-from modules.common_utils import get_dir_path, read_file, write_file
-from modules.security_utils import get_verified_password
+try:
+    from modules.aes import AESCipher
+    from modules.common_utils import get_dir_path, read_file, write_file, hold_console_for_input
+    from modules.security_utils import get_verified_password
+except ImportError:
+    print("\n[-] Import Error: Ensure that the script is run from the correct directory.\n\nExiting...\n")
+    time.sleep(2)
+    sys.exit(1)
 
 
-def main() -> None:
+def main(standalone=False) -> None:
     """
     Main function that:
     - Encrypts mapping.db using a password provided by the user.
@@ -42,6 +48,12 @@ def main() -> None:
     dir_path = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else get_dir_path()
     aes = AESCipher()
 
+    if not os.path.exists(os.path.join(dir_path, "db", "app_path.json")):
+        print("\n[-] app_path.json file not found. Please ensure the script is run from the correct directory.")
+        print("[-] FILE NOT FOUND")
+        if standalone:
+            hold_console_for_input()
+        sys.exit(-2)
     app_path_data = read_file(os.path.join(dir_path, "db", "app_path.json"))
     app_path_json = json.loads(app_path_data)
 
@@ -55,7 +67,14 @@ def main() -> None:
         print("\n[-] PATH ERROR")
     write_file(os.path.join(dir_path, "db", "app_path.dll"), app_path_data)
 
-    pw = get_verified_password(validate_password=True)
+    if not os.path.exists(os.path.join(dir_path, "db", "mapping.db")):
+        print("\n[-] mapping.db file not found. Please ensure the script is run from the correct directory.")
+        print("[-] FILE NOT FOUND")
+        if standalone:
+            hold_console_for_input()
+        sys.exit(-2)
+
+    pw = get_verified_password(validate_password=True, standalone=standalone)
     mapping_data = read_file(os.path.join(dir_path, "db", "mapping.db"))
 
     enc_mapping = aes.encrypt(mapping_data, pw)
@@ -66,4 +85,8 @@ def main() -> None:
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] != "ShadowCrypt":
         print("\n[!] Warning: Running this file directly may overwrite the existing database resulting in data loss.\n**Recommended** - Recover all the hidden files first!\nProceed with caution!")
+        main(standalone=True)
+        print("\n[*] Database initialized successfully.")
+        hold_console_for_input()
+        sys.exit(0)
     main()

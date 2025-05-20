@@ -23,9 +23,13 @@ import string
 import hashlib
 import getpass
 
-from modules.aes import AESCipher
-from modules.common_utils import read_file, write_file, hold_console_for_input
-
+try:
+    from modules.aes import AESCipher
+    from modules.common_utils import read_file, write_file, hold_console_for_input
+except ImportError:
+    print("\n[-] Import Error: Ensure that the script is run from the correct directory.\n\nExiting...\n")
+    time.sleep(2)
+    sys.exit(1)
 
 MAX_ATTEMPTS = 3
 MIN_PW_LEN = 8
@@ -92,7 +96,7 @@ def check_password_requirements(pw: str) -> list[str]:
     return unmet_pw_reqs
 
 
-def get_verified_password(validate_password=False) -> str:
+def get_verified_password(validate_password=False, standalone=False) -> str:
     """
     Prompts the user to enter and confirm a password, validates it against 
     specific requirements, and returns the verified password.
@@ -125,9 +129,13 @@ def get_verified_password(validate_password=False) -> str:
 
     except (KeyboardInterrupt, EOFError):
         print("\n\n[-] Keyboard Interrupt")
+        if standalone:
+            hold_console_for_input()
         sys.exit(-2)
     except ValueError as e:
         print(e)
+        if standalone:
+            hold_console_for_input()
         sys.exit(1)
 
 
