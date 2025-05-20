@@ -29,9 +29,14 @@ from dataclasses import dataclass
 
 from pylnk3 import for_file
 
-from modules.aes import AESCipher
-from modules.common_utils import get_dir_path, load_json, ext_to_app_path, move_file, process_filename_for_extension, hold_console_for_input
-from modules.security_utils import hash_name, name_gen, load_encrypted_data, postprocessing
+try:
+    from modules.aes import AESCipher
+    from modules.common_utils import get_dir_path, load_json, ext_to_app_path, move_file, process_filename_for_extension, hold_console_for_input
+    from modules.security_utils import hash_name, name_gen, load_encrypted_data, postprocessing
+except ImportError:
+    print("\n[-] Import Error: Ensure that the script is run from the correct directory.\n\nExiting...\n")
+    time.sleep(2)
+    sys.exit(1)
 
 
 @dataclass
@@ -55,7 +60,7 @@ MAX_TRIES = 100
 DIR_PATH = get_dir_path()
 MAPPING_DB = MappingDB([], {}, {}, {})
 if not os.path.exists(os.path.join(DIR_PATH, "db", "app_path.dll")):
-    print("\n[-] app_path.dll file not found. Please reinitialize the database.")
+    print("\n[-] app_path file not found. Please reinitialize database or ensure that the script is run from the correct directory.")
     hold_console_for_input()
     sys.exit(1)
 APP_PATH_DB = load_json(os.path.join(DIR_PATH, "db", "app_path.dll"))
@@ -81,6 +86,10 @@ def preprocessing() -> dict[str, str]:
             APP_PATH_DB.pop(key)
         else:
             for ext in app.get("ext", []):
+                if not os.path.exists(os.path.join(DIR_PATH, "icon", app.get("ico", ""))):
+                    print("[!] Icon folder not found.\nEnsure that the script is run from the correct directory.")
+                    hold_console_for_input()
+                    sys.exit(1)
                 ext_icon_dict[ext] = os.path.join(DIR_PATH, "icon", app.get("ico", ""))
     print(f"[*] Supported Extensions:\n{[ext for ext in ext_icon_dict.keys()]}\n")
     return ext_icon_dict
@@ -201,6 +210,10 @@ def main(is_test: bool = False, files: list[str] = None) -> None:
 
     username = os.getlogin()
     enc_mapping_filepath = os.path.join(DIR_PATH, "db", f"enc_{username}_mapping.dll")
+    if not os.path.exists(enc_mapping_filepath):
+        print("\n[-] enc_mapping file not found! Please reinitialize database or ensure that the script is run from the correct directory.")
+        hold_console_for_input()
+        sys.exit(1)
     raw_data, pw = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
     data = json.loads(raw_data.replace("'", '"'))
 

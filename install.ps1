@@ -28,7 +28,7 @@ if ($confirmation -ne "yes" -and $confirmation -ne "y") {
 else {
     $output = uv run init_db.py "ShadowCrypt" | ForEach-Object { Write-Host $_; $_ }
     if ($output) {
-        if ($output[-1] -eq "[-] PASSWORD ERROR" -or $output[-1] -eq "[-] Keyboard Interrupt" -or $output[-1] -eq "[-] PATH ERROR") {
+        if ($output[-1] -eq "[-] PASSWORD ERROR" -or $output[-1] -eq "[-] Keyboard Interrupt" -or $output[-1] -eq "[-] PATH ERROR" -or $output[-1] -eq "[-] FILE NOT FOUND") {
             Write-Host "[!] Installation Failed!!!"
             Read-Host "`nPress any key to exit"
             exit 1

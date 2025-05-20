@@ -18,12 +18,18 @@ handles errors such as missing mappings, missing files, or missing application a
 import os
 import sys
 import json
+import time
 import argparse
 import subprocess
 
-from modules.aes import AESCipher
-from modules.common_utils import get_dir_path, load_json, ext_to_app_path, hold_console_for_input
-from modules.security_utils import load_encrypted_data
+try:
+    from modules.aes import AESCipher
+    from modules.common_utils import get_dir_path, load_json, ext_to_app_path, hold_console_for_input
+    from modules.security_utils import load_encrypted_data
+except ImportError:
+    print("\n[-] Import Error: Ensure that the script is run from the correct directory.\n\nExiting...\n")
+    time.sleep(2)
+    sys.exit(1)
 
 
 def main(hashed_name: str) -> None:
@@ -52,6 +58,10 @@ def main(hashed_name: str) -> None:
 
     username = os.getlogin()
     enc_mapping_filepath = os.path.join(dir_path, "db", f"enc_{username}_mapping.dll")
+    if not os.path.exists(enc_mapping_filepath):
+        print("\n[-] enc_mapping.dll file not found! Please reinitialize database or ensure that the script is run from the correct directory.")
+        hold_console_for_input()
+        sys.exit(1)
     raw_data, _ = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
     data = json.loads(raw_data.replace("'", '"'))
     mapping_dict = data["mapping_table"]

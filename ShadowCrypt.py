@@ -23,7 +23,12 @@ import os
 import sys
 import time
 import subprocess
-from modules.common_utils import get_dir_path, hold_console_for_input
+try:
+    from modules.common_utils import get_dir_path, hold_console_for_input
+except ImportError:
+    print("\n[-] Import Error: Ensure that the script is run from the correct directory.\n\nExiting...\n")
+    time.sleep(2)
+    sys.exit(1)
 
 
 MAX_ATTEMPTS = 3
