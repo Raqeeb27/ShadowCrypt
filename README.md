@@ -10,6 +10,7 @@
 ![Python Badge](https://img.shields.io/badge/Python-badge?style=for-the-badge)
 ![UV Badge](https://img.shields.io/badge/UV-badge?style=for-the-badge&color=%236200EA)
 ![Powershell Badge](https://img.shields.io/badge/Powershell-badge?style=for-the-badge&color=%23012456)  
+![GitHub release](https://img.shields.io/github/v/release/Raqeeb27/ShadowCrypt?style=for-the-badge)
 
 <br>
 
