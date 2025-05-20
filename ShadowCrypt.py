@@ -86,7 +86,7 @@ def run_init_db():
             hold_console_for_input()
             sys.exit(1)
 
-    command = [init_db_path] if getattr(sys, 'frozen', False) else [sys.executable, init_db_path]
+    command = [init_db_path, "ShadowCrypt"] if getattr(sys, 'frozen', False) else [sys.executable, init_db_path, "ShadowCrypt"]
 
     attempts = 0
     while attempts < MAX_ATTEMPTS:
