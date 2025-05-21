@@ -102,7 +102,7 @@ def main(hashed_name: str) -> None:
 
     if ext in app_path_dict.get("photo", {}).get("ext", []):
         arg = app_path_dict["photo"].get("arg", "")
-        cmd = [app] + ([arg] if arg else []) + [hidden_name]
+        cmd = f"{app} {arg} {hidden_name}"
     else:
         cmd = [app, hidden_name]
 
