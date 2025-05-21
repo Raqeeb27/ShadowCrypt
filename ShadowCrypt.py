@@ -119,6 +119,8 @@ def check_init_db():
         print("\n[!] Missing or invalid database files...")
         print("\n[*] Initializing the database...")
         run_init_db()
+        return False
+    return True
 
 
 def main():
@@ -130,7 +132,7 @@ def main():
 
     if len(sys.argv) < 2:
         print("\n[-] No module specified.")
-        print(f"[*] Usage: ShadowCrypt.exe <module> [arguments]") if getattr(sys, 'frozen', False) else print("[*] Usage: ShadowCrypt.py <module> [arguments]")
+        print(f"[*] Usage: ShadowCrypt.{'exe' if getattr(sys, 'frozen', False) else 'py'} <module> [arguments]")
         print("    Modules: hide, link, recover, init")
         if getattr(sys, 'frozen', False):
             print("\nRun below command to initialize the database.")
@@ -158,7 +160,13 @@ def main():
         hold_console_for_input()
         sys.exit(1)
 
-    check_init_db()
+    isInitialized = check_init_db()
+    if module in ["link", "recover"] and not isInitialized:
+        print("\n[-] Database just initialized. No hidden files to recover or link.")
+        print("\n[*] Run the command below to hide files.")
+        print(f"[*] Usage: ShadowCrypt.{'exe' if getattr(sys, 'frozen', False) else 'py'} hide --files <file1> <file2> ...")
+        hold_console_for_input()
+        sys.exit(1)
 
     script_path = os.path.join(get_dir_path(), script_map[module])
     if not os.path.exists(script_path):
