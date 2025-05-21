@@ -175,7 +175,7 @@ def make_shortcut(file_path: str, ext_icon_dict: dict[str, str],
         print(f"    [+] Hiding success: {file_path} -> {hidden_file_path}")
         return hidden_file_path
 
-    except (ValueError, OSError) as e:
+    except (ValueError, OSError, KeyboardInterrupt, EOFError) as e:
         print(f"[-] Failed to hide {file_path}: {e}")
         if os.path.exists(hidden_file_path):
             move_file(hidden_file_path, file_path)
