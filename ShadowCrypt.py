@@ -186,7 +186,10 @@ def main():
     except (KeyboardInterrupt, EOFError):
         sys.exit(1)
 
+    return module
+
 
 if __name__ == "__main__":
-    main()
-    hold_console_for_input()
+    module = main()
+    if not module == "link":
+        hold_console_for_input()
