@@ -1,19 +1,19 @@
 """
-Utils for common operations.
+Common utility functions for file and path operations.
 
 Functions:
 - get_dir_path: Retrieves the base directory path of the current script or executable.
 - read_file: Reads the content of a text file with file locking.
 - write_file: Writes data to a file with file locking.
-- load_json: Loads and parses JSON data from a file with file locking.
+- check_db_files: Checks for the existence of the encrypted database files.
 - ext_to_app_path: Maps a file extension to the corresponding application path.
 - move_file: Atomically moves a file from src_path to dest_path on Windows.
 - process_filename_for_extension: Validates and sanitizes the file extension of a given file path.
+- hold_console_for_input: Waits for user input before exiting.
 """
 
 import os
 import sys
-import json
 import time
 
 from filelock import FileLock
@@ -84,20 +84,25 @@ def write_file(filepath: str, data: str) -> None:
             f.write(data)
 
 
-def load_json(filepath: str) -> dict[str, list | dict | str]:
+def check_db_files() -> tuple[str, str]:
     """
-    Loads JSON data from a file.
-
-    Args:
-        filepath (str): Path to the JSON file.
+    Checks for the existence of the encrypted database files.
 
     Returns:
-        dict: The parsed JSON data.
+        tuple[str, str]: Paths to the encrypted mapping and application path files.
     """
-    lock = FileLock(f"{filepath}.lock")
-    with lock:
-        with open(filepath, "r", encoding="utf-8") as f:
-            return json.load(f)
+    dir_path = get_dir_path()
+    username = os.getlogin()
+
+    enc_mapping_filepath = os.path.join(dir_path, "db", f"enc_{username}_mapping.dll")
+    enc_app_path_filepath = os.path.join(dir_path, "db", "enc_app_path.dll")
+
+    if not os.path.exists(enc_mapping_filepath) or not os.path.exists(enc_app_path_filepath):
+        print("\n[-] Encrypted database files not found. Please reinitialize the database or ensure that the script is run from the correct directory.")
+        hold_console_for_input()
+        sys.exit(1)
+
+    return enc_mapping_filepath, enc_app_path_filepath
 
 
 def ext_to_app_path(ext: str, app_path_db: dict[str, dict[str, list | str]]) -> str:
