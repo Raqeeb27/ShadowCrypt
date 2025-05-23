@@ -140,25 +140,39 @@ def get_verified_password(validate_password=False, standalone=False) -> str:
 
 
 def load_encrypted_data(filepath: str, aes: AESCipher,
-                        prompt: str = "PASSWORD? : ") -> tuple[str, str]:
+                        prompt: str = "PASSWORD? : ", passwd: str = "") -> tuple[str, str]:
     """
-    Loads and decrypts encrypted data from a file using a password.
+    Loads and decrypts data from an encrypted file using a password.
 
     Args:
         filepath (str): Path to the encrypted file.
         aes (AESCipher): An instance of the AES cipher for decryption.
-        prompt (str): The prompt to display for password input.
+        prompt (str, optional): The prompt to display for password input. Defaults to "PASSWORD? : ".
+        passwd (str, optional): Password to use for decryption. If empty, prompts the user.
 
     Returns:
-        Tuple[str, str]: Decrypted data and the password.
+        tuple[dict, str]: Tuple containing the decrypted data as a dictionary and the password used.
 
     Raises:
-        SystemExit: If decryption fails after maximum attempts.
+        SystemExit: If decryption fails after maximum attempts or on user interruption.
     """
-    if not os.path.exists(filepath):
+    if not os.path.isfile(filepath):
         print(f"\n[!] Database file not found!")
         hold_console_for_input()
         sys.exit(1)
+
+    if passwd:
+        try:
+            dec_data = aes.decrypt(read_file(filepath), passwd)
+            if all(key in dec_data for key in ["ext", "path", "ico"]):
+                return json.loads(dec_data.replace("'", '"'))
+            else:
+                raise ValueError()
+        except:
+            print(f"[-] Decryption error: Can't decrypt the file with the provided password.")
+            print("[!] The app_path file may be corrupted or tampered with.")
+            hold_console_for_input()
+            sys.exit(1)
 
     attempts = 0
     while attempts < MAX_ATTEMPTS:
@@ -166,14 +180,14 @@ def load_encrypted_data(filepath: str, aes: AESCipher,
             pw = getpass.getpass(prompt)
             print()
         except (KeyboardInterrupt, EOFError):
-            print("\n[!] Keyboard Interrupt")
+            print("\n\n[!] Keyboard Interrupt")
             hold_console_for_input()
             sys.exit(1)
         data = read_file(filepath)
         try:
             dec_data = aes.decrypt(data, pw)
             if "hidden_ext" in dec_data or "mapping_table" in dec_data:
-                return dec_data, pw
+                return json.loads(dec_data.replace("'", '"')), pw
         except UnicodeDecodeError:
             attempts += 1
             print(f"\n[-] PASSWORD Fail :(\n{MAX_ATTEMPTS - attempts} attempts remaining\n")
