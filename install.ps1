@@ -16,7 +16,7 @@ echo "`n---------------------------------`n"
 
 
 echo "[*] Initializing databases.`n"
-if ((Test-Path "db\enc_${env:USERNAME}_mapping.dll") -and (Test-Path "db\app_path.dll")) {
+if ((Test-Path "db\enc_${env:USERNAME}_mapping.dll") -and (Test-Path "db\enc_app_path.dll")) {
     $confirmation = Read-Host "Do you want to reinitialize the database?`n**Recommended** - Recover all the hidden files first!`nWarning: This will overwrite the existing databases.`nType 'yes' to continue "
 } else {
     $confirmation = "yes"
@@ -28,7 +28,7 @@ if ($confirmation -ne "yes" -and $confirmation -ne "y") {
 else {
     $output = uv run init_db.py "ShadowCrypt" | ForEach-Object { Write-Host $_; $_ }
     if ($output) {
-        if ($output[-1] -eq "[-] PASSWORD ERROR" -or $output[-1] -eq "[-] Keyboard Interrupt" -or $output[-1] -eq "[-] PATH ERROR" -or $output[-1] -eq "[-] FILE NOT FOUND") {
+        if ($output[-1] -eq "[-] PASSWORD ERROR" -or $output[-1] -eq "[-] Keyboard Interrupt" -or $output[-1] -eq "[-] FILE NOT FOUND") {
             Write-Host "[!] Installation Failed!!!"
             Read-Host "`nPress any key to exit"
             exit 1

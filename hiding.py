@@ -10,18 +10,18 @@ This module provides functionality for securely hiding files by:
 - Validating file extensions and associating them with application icons.
 
 Usage:
-    python hiding.py --files <file1 file2 ...>  # Hide one or more files
-    python hiding.py --testbed                  # Hide all files in the testbed folder
+    python hiding.py --files <file1 file2 ...>   # Hide one or more files
+    python hiding.py --testbed                   # Hide all files in the testbed folder
 
 Notes:
     - Only supported file extensions can be hidden.
     - `.lnk` files cannot be hidden.
     - All mappings and sensitive data are stored securely using AES encryption.
+    - Run the script from the correct directory to ensure all dependencies and resources are found.
 """
 
 import os
 import sys
-import json
 import time
 import random
 import argparse
@@ -31,7 +31,7 @@ from pylnk3 import for_file
 
 try:
     from modules.aes import AESCipher
-    from modules.common_utils import get_dir_path, load_json, ext_to_app_path, move_file, process_filename_for_extension, hold_console_for_input
+    from modules.common_utils import get_dir_path, ext_to_app_path, move_file, process_filename_for_extension, hold_console_for_input, check_db_files
     from modules.security_utils import hash_name, name_gen, load_encrypted_data, postprocessing
 except ImportError:
     print("\n[-] Import Error: Ensure that the script is run from the correct directory.\n\nExiting...\n")
@@ -59,11 +59,6 @@ class MappingDB:
 MAX_TRIES = 100
 DIR_PATH = get_dir_path()
 MAPPING_DB = MappingDB([], {}, {}, {})
-if not os.path.exists(os.path.join(DIR_PATH, "db", "app_path.dll")):
-    print("\n[-] app_path file not found. Please reinitialize database or ensure that the script is run from the correct directory.")
-    hold_console_for_input()
-    sys.exit(1)
-APP_PATH_DB = load_json(os.path.join(DIR_PATH, "db", "app_path.dll"))
 
 
 def preprocessing() -> dict[str, str]:
@@ -203,24 +198,31 @@ def main(is_test: bool = False, files: list[str] = None) -> None:
     Main function to hide files by creating shortcuts and managing file mappings.
 
     Args:
-        is_test (bool): Whether to hide all files in the testbed folder.
-        files (list[str]): List of file paths to hide.
+        is_test (bool, optional): If True, hides all files in the testbed folder for testing purposes. Defaults to False.
+        files (list[str], optional): List of file paths to hide. If None, no files are processed unless is_test is True.
+
+    Behavior:
+        - Loads and decrypts mapping and application path databases.
+        - Initializes internal mapping and hash tables.
+        - Prepares icon associations for file extensions.
+        - If is_test is True, processes all files in the testbed directory (excluding .lnk files).
+        - If files are provided, processes each file (excluding invalid files and .lnk files).
+        - Creates shortcuts for valid files and updates mapping data.
+        - Saves updated mapping data and synchronizes shortcut mappings.
+        - Exits with an error message if no valid files are found to hide.
     """
     aes = AESCipher()
 
-    username = os.getlogin()
-    enc_mapping_filepath = os.path.join(DIR_PATH, "db", f"enc_{username}_mapping.dll")
-    if not os.path.exists(enc_mapping_filepath):
-        print("\n[-] enc_mapping file not found! Please reinitialize database or ensure that the script is run from the correct directory.")
-        hold_console_for_input()
-        sys.exit(1)
-    raw_data, pw = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
-    data = json.loads(raw_data.replace("'", '"'))
+    enc_mapping_filepath, enc_app_path_filepath = check_db_files()
 
-    MAPPING_DB.hidden_ext_list = data["hidden_ext"]
-    MAPPING_DB.hidden_dir_dict = data["hidden_dir"]
-    MAPPING_DB.mapping_dict = data["mapping_table"]
-    MAPPING_DB.hash_table = data["hash_table"]
+    global APP_PATH_DB
+    mapping_data, pw = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
+    APP_PATH_DB = load_encrypted_data(enc_app_path_filepath, aes, passwd=pw)
+
+    MAPPING_DB.hidden_ext_list = mapping_data.get("hidden_ext")
+    MAPPING_DB.hidden_dir_dict = mapping_data.get("hidden_dir")
+    MAPPING_DB.mapping_dict = mapping_data.get("mapping_table")
+    MAPPING_DB.hash_table = mapping_data.get("hash_table")
 
     ext_icon_dict = preprocessing()
 
@@ -247,15 +249,15 @@ def main(is_test: bool = False, files: list[str] = None) -> None:
     target_list = [item for item in target_list if item is not None]
     if len(target_list) == 0:
         if is_test:
-            print("[-] No files to hide in testbed folder.")
+            print("\n[-] No valid files found in testbed folder.")
         elif files:
-            print("[-] No valid files selected to hide.")
+            print("\n[-] No valid files selected to hide.")
         hold_console_for_input()
         sys.exit(1)
 
-    data["mapping_table"] = MAPPING_DB.mapping_dict
-    data["hash_table"] = MAPPING_DB.hash_table
-    postprocessing(data, aes, pw, enc_mapping_filepath)
+    mapping_data["mapping_table"] = MAPPING_DB.mapping_dict
+    mapping_data["hash_table"] = MAPPING_DB.hash_table
+    postprocessing(mapping_data, aes, pw, enc_mapping_filepath)
     synchronize(target_list, MAPPING_DB.mapping_dict)
 
 
@@ -285,7 +287,7 @@ if __name__ == "__main__":
                 hold_console_for_input()
                 sys.exit(1)
 
-            print("[*] Hiding all files in testbed folder.\n")
+            print("\n[*] Hiding all files in testbed folder.\n")
 
         elif args.files:
             if not any(os.path.isfile(file) for file in args.files):

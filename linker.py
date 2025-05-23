@@ -1,7 +1,7 @@
 """
 ShadowCrypt File Linker
 
-This module provides functionality to open files using their hashed names.
+This script allows you to open files using their hashed names.
 It securely retrieves file mappings and application associations, then launches
 the appropriate application to open the hidden file.
 
@@ -11,20 +11,19 @@ Usage:
 Arguments:
     --hash    The hash name of the file to be opened.
 
-The module ensures that only mapped and existing files are opened, and
+The script ensures that only mapped and existing files are opened, and
 handles errors such as missing mappings, missing files, or missing application associations.
 """
 
 import os
 import sys
-import json
 import time
 import argparse
 import subprocess
 
 try:
     from modules.aes import AESCipher
-    from modules.common_utils import get_dir_path, load_json, ext_to_app_path, hold_console_for_input
+    from modules.common_utils import ext_to_app_path, hold_console_for_input, check_db_files
     from modules.security_utils import load_encrypted_data
 except ImportError:
     print("\n[-] Import Error: Ensure that the script is run from the correct directory.\n\nExiting...\n")
@@ -36,36 +35,26 @@ def main(hashed_name: str) -> None:
     """
     Main function to link and open a file based on its hash name.
 
-    This function retrieves file mapping and application path data from encrypted
-    and JSON files. It then identifies the appropriate application to open the file
-    based on its extension and executes the corresponding command.
+    This function retrieves file mapping and application association data from encrypted
+    files. It identifies the original filename and the appropriate application to open
+    the file based on its extension, then launches the application with the hidden file.
 
     Args:
         hashed_name (str): The hash name of the file to be opened.
 
-    Raises:
-        SystemExit: If the provided hash name or its mapping is not found,
-                    or if no application is mapped for the file's extension.
+    Exits:
+        If the provided hash name, its mapping, the hidden file, or the application association
+        is not found, or if the file cannot be opened.
     """
-    dir_path = get_dir_path()
     aes = AESCipher()
 
-    if not os.path.exists(os.path.join(dir_path, "db", "app_path.dll")):
-        print("\n[-] app_path.dll file not found. Please reinitialize the database.")
-        hold_console_for_input()
-        sys.exit(1)
-    app_path_dict = load_json(os.path.join(dir_path, "db", "app_path.dll"))
+    enc_mapping_filepath, enc_app_path_filepath = check_db_files()
 
-    username = os.getlogin()
-    enc_mapping_filepath = os.path.join(dir_path, "db", f"enc_{username}_mapping.dll")
-    if not os.path.exists(enc_mapping_filepath):
-        print("\n[-] enc_mapping.dll file not found! Please reinitialize database or ensure that the script is run from the correct directory.")
-        hold_console_for_input()
-        sys.exit(1)
-    raw_data, _ = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
-    data = json.loads(raw_data.replace("'", '"'))
-    mapping_dict = data["mapping_table"]
-    hash_table = data["hash_table"]
+    mapping_data, pw = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
+    app_path_data = load_encrypted_data(enc_app_path_filepath, aes, passwd=pw)
+
+    mapping_dict = mapping_data.get("mapping_table")
+    hash_table = mapping_data.get("hash_table")
 
     if hashed_name not in hash_table:
         print("[-] Provided file hash name not found.")
@@ -85,7 +74,7 @@ def main(hashed_name: str) -> None:
 
     file_name = mapping_dict[hidden_name]
     ext = file_name.split(".")[-1]
-    app = ext_to_app_path(ext, app_path_dict)
+    app = ext_to_app_path(ext, app_path_data)
     if not app:
         print(f"[-] No application mapped for the file extension `{ext}`")
         hold_console_for_input()
@@ -100,8 +89,8 @@ def main(hashed_name: str) -> None:
         hold_console_for_input()
         sys.exit(1)
 
-    if ext in app_path_dict.get("photo", {}).get("ext", []):
-        arg = app_path_dict["photo"].get("arg", "")
+    if ext in app_path_data.get("photo", {}).get("ext", []):
+        arg = app_path_data["photo"].get("arg", "")
         cmd = f"{app} {arg} {hidden_name}"
     else:
         cmd = [app, hidden_name]

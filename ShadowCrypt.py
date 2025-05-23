@@ -55,7 +55,7 @@ def should_reinitialize_db():
     """
     db_dir = os.path.join(get_dir_path(), "db")
     username = os.getlogin()
-    required_files = [f"enc_{username}_mapping.dll", "app_path.dll"]
+    required_files = [f"enc_{username}_mapping.dll", "enc_app_path.dll"]
 
     for file in required_files:
         file_path = os.path.join(db_dir, file)
@@ -162,7 +162,7 @@ def main():
 
     isInitialized = check_init_db()
     if module in ["link", "recover"] and not isInitialized:
-        print("\n[-] Database just initialized. No hidden files to recover or link.")
+        print("\n[!] Database just initialized. No hidden files to recover or link.")
         print("\n[*] Run the command below to hide files.")
         print(f"[*] Usage: ShadowCrypt.{'exe' if getattr(sys, 'frozen', False) else 'py'} hide --files <file1> <file2> ...")
         hold_console_for_input()

@@ -15,7 +15,6 @@ Usage:
 
 import os
 import sys
-import json
 import time
 import argparse
 
@@ -253,11 +252,11 @@ def main(hashed_name: str | None = None, files: list | None = None,
         print("\n[-] enc_mapping.dll file not found! Please reinitialize database or ensure that the script is run from the correct directory.")
         hold_console_for_input()
         sys.exit(1)
-    raw_data, pw = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
-    data = json.loads(raw_data.replace("'", '"'))
 
-    mapping_dict = data.get("mapping_table")
-    hash_table = data.get("hash_table")
+    mapping_data, pw = load_encrypted_data(enc_mapping_filepath, aes, prompt="PASSWORD? : ")
+
+    mapping_dict = mapping_data.get("mapping_table")
+    hash_table = mapping_data.get("hash_table")
 
     if not mapping_dict:
         print("[-] No hidden files to recover.")
@@ -307,9 +306,9 @@ def main(hashed_name: str | None = None, files: list | None = None,
                 print(f"[-] Provided hash not found for the shortcut file {file_path}.")
                 continue
 
-    data["mapping_table"] = mapping_dict
-    data["hash_table"] = hash_table
-    postprocessing(data, aes, pw, enc_mapping_filepath)
+    mapping_data["mapping_table"] = mapping_dict
+    mapping_data["hash_table"] = hash_table
+    postprocessing(mapping_data, aes, pw, enc_mapping_filepath)
 
 
 if __name__ == "__main__":
