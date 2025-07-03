@@ -31,6 +31,37 @@ except ImportError:
     sys.exit(1)
 
 
+def is_path_accessible(path):
+    try:
+        os.listdir(path)
+        return True
+    except Exception:
+        return False
+
+
+def is_folder_possibly_encrypted(path):
+    suspicious_exts = ['.locked', '.crypt', '.enc', '.encrypted', '.lockbit']
+    ransom_keywords = ['decrypt', 'ransom', 'recover']
+
+    try:
+        for filename in os.listdir(path):
+            lower = filename.lower()
+            full_path = os.path.join(path, filename)
+
+            # Check for suspicious file extensions
+            _, ext = os.path.splitext(filename)
+            if ext in suspicious_exts:
+                return True
+
+            # Check for ransom note filenames
+            if any(keyword in lower for keyword in ransom_keywords):
+                if filename.lower().endswith('.txt'):
+                    return True
+        return False
+    except Exception:
+        return True
+
+
 def process_link_file(link_file_path: str, verbose: bool = True) -> str | None:
     """
     Processes a .lnk shortcut file to extract the hashed name.
@@ -206,6 +237,14 @@ def recovery(hidden_file: str, mapping_dict: dict[str, str],
 
         if not original_file:
             raise ValueError(f"No mapping found for {hidden_file}.")
+
+        parent_dir = os.path.dirname(original_file)
+        original_file_name = os.path.basename(original_file)
+        if not is_path_accessible(parent_dir) or is_folder_possibly_encrypted(parent_dir):
+            backup_dir = os.path.join("C:\\", "Windows", "ShadowCrypt_Backup")
+            if not os.path.exists(backup_dir):
+                os.makedirs(backup_dir)
+            original_file = os.path.join(backup_dir, original_file_name)
 
         original_name, original_ext = os.path.splitext(original_file)
         count = 1
