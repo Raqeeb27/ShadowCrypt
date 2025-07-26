@@ -1,6 +1,6 @@
 <div align="center">
 
-# <span style="vertical-align: middle;"><img src='images/ShadowCrypt_Icon.png' alt="ShadowCrypt_Icon" style="width:60px;height:auto; margin-bottom: -3px;"></span> ShadowCrypt
+# <span style="vertical-align: middle;"><img src='images/ShadowCrypt_Icon.png' alt="ShadowCrypt_Icon" style="width:60px;height:auto; margin-bottom: -3px;"> ShadowCrypt</span>
 
 ![ShadowCrypt Logo](images/ShadowCrypt_README_image.jpg)
 
@@ -14,13 +14,13 @@
 
 <br>
 
-### Proactive ransomware defense and secure file hiding for Windows. Effortlessly protect, access, and recover sensitive files using encrypted mappings and smart shortcuts.
+### *Proactive ransomware defense and secure file hiding for Windows. Effortlessly protect, access, and recover sensitive files using encrypted mappings and smart shortcuts.*
 
 </div>
 
 <br>
 
-## Original Research
+## 🔬Original Research
 
 This project is based on the research paper:
 
@@ -53,7 +53,7 @@ To maintain ease of access to these hidden files, this project utilizes Windows 
 
 <br>
 
-## About This Improved Project
+## 🚀About This Improved Project
 
 This project provides an enhanced and more user-friendly implementation of a proactive ransomware defense and secure file hiding solution for Windows. Building upon the foundational concepts, this improved version focuses on simplifying the user experience and expanding the functionality. Key enhancements include:
 
@@ -64,19 +64,20 @@ This project provides an enhanced and more user-friendly implementation of a pro
     * Hidden files within a specific directory.
     * Hidden files within a specific directory and all its subdirectories (recursive recovery).
 * **Right-Click Menu Integration:** Provides convenient right-click menu options for core functionalities, enabling easy access without the need for command-line interaction.
-* **Simplified Setup:** Features an easy installation process via a standalone executable (available in the [releases](https://github.com/Raqeeb27/ShadowCrypt/releases).
+* **Simplified Setup:** Features an easy installation process via a standalone executable (available in the [releases](https://github.com/Raqeeb27/ShadowCrypt/releases)).
 
 This project aims to make robust ransomware defense and secure file management more accessible and efficient for Windows users.
 
 <br>
 
-## Prerequisites
+<a name="prerequisites"></a>
+## 🛠️Prerequisites
 
 To run this project on your Windows system, ensure the following are installed:
 
-* **Python:** Version 3.12 or higher is required. You can download it from [here](https://www.python.org/downloads/).
-* **PowerShell:** Windows PowerShell is typically pre-installed on modern Windows systems. Ensure it is enabled and accessible. If needed, you can download the latest version from [here](https://github.com/PowerShell/PowerShell/releases).
-* **uv:** This package installer is required. You can install it using pip:
+* <img src="images/Readme-Images/Python_Logo.png" alt="Python_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **Python:** Version 3.12 or higher is required. You can download it from [here](https://www.python.org/downloads/).
+* <img src="images/Readme-Images/Powershell_logo.png" alt="Powershell_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **PowerShell:** Windows PowerShell is typically pre-installed on modern Windows systems. Ensure it is enabled and accessible. If needed, you can download the latest version from [here](https://github.com/PowerShell/PowerShell/releases).
+* <img src="images/Readme-Images/uv_Logo.png" alt="UV_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **uv:** This package installer is required. You can install it using pip:
     ```bash
     pip install uv
     ```
@@ -86,21 +87,21 @@ To run this project on your Windows system, ensure the following are installed:
 
 This project supports secure hiding and recovery of various file formats by leveraging external applications. Installing these applications will ensure a seamless experience with a wider range of files:
 
-* **LibreOffice:** (for documents, presentations, spreadsheets, PDFs) Download from [here](https://www.libreoffice.org/download/download-libreoffice/).
-* **7-Zip:** (for archive formats) Download from [here](https://www.7-zip.org/download.html).
-* **VLC Media Player:** (for audio and video files) Download from [here](https://www.videolan.org/vlc/).
+* <img src="images/Readme-Images/LibreOffice_Logo.png" alt="LibreOffice_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **LibreOffice:** (for documents, presentations, spreadsheets, PDFs) Download from [here](https://www.libreoffice.org/download/download-libreoffice/).
+* <img src="images/Readme-Images/7zip_logo.png" alt="P7zip_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **7-Zip:** (for archive formats) Download from [here](https://www.7-zip.org/download.html).
+* <img src="images/Readme-Images/VLC_Logo.png" alt="VLC_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **VLC Media Player:** (for audio and video files) Download from [here](https://www.videolan.org/vlc/).
 
 **Note:** Ensure these applications are installed in their default locations for automatic path detection. You can optionally verify or manually configure the application paths later in the [`app_path.json`](db/app_path.json) file.
 
 <br>
 
-## Installation
+## 📝Installation
 
 > Before proceeding with the installation, please ensure you have the necessary [prerequisites](#prerequisites) installed.
 
-⭐ **Easy Installation via Standalone Executable:** For the simplest installation, you can download and run the latest release of the project. Visit the [release page](https://github.com/Raqeeb27/ShadowCrypt/releases) to download the standalone executable. Running this will guide you through the installation process.
+⭐ **Easy Installation via Standalone Executable:** For the simplest installation, you can download and run the latest release of the project. Visit the [release page](https://github.com/Raqeeb27/ShadowCrypt/releases) to download the standalone executable. Running this will guide you through the installation process.⭐
 
-**Alternatively, you can install from the source code:**
+**🔳Alternatively, you can install from the source code:**
 
 1.  **Clone the repository:**
     ```bash
@@ -125,72 +126,118 @@ This project supports secure hiding and recovery of various file formats by leve
 
 <br>
 
-## Usage
+## 💡Usage
 
-Once the installation is complete (either via the standalone executable or from the source code), you can easily interact with the project using the integrated right-click menu options. After selecting the desired option, you may encounter User Account Control (UAC) prompts; click "Yes" to proceed. A command window will then appear, prompting you to enter the password you set during the installation.
+* Once the installation is complete (either via the standalone executable or from the source code), you can easily interact with the project using the integrated right-click menu options.
+* After selecting the desired option, you may encounter User Account Control (UAC) prompts; click "Yes" to proceed.
+* A command window will then appear, prompting you to enter the password you set during the installation.
 
-**Hiding/Recovering a Single File:**
+<table>
+  <tr>
+    <td>
+      <ul>
+        <li><strong>Hiding/Recovering a Single File:</strong>
+          <ul style="margin-left: 20px;">
+            <li>Right-click on the file you want to hide or recover.</li>
+            <li>In the context menu (on Windows 11, you might need to click "Show more options"), select <strong>"Hide File"</strong> or <strong>"Recover File"</strong>.</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><strong>Opening a Hidden File:</strong>
+          <ul style="margin-left: 20px;">
+            <li>Simply double-click the shortcut link file that was created when the file was hidden.</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><strong>Hiding/Recovering Multiple Selected Files:</strong>
+          <ul style="margin-left: 20px;">
+            <li>Select all the files you want to hide or recover.</li>
+            <li>Right-click on any of the selected files (on Windows 11, you might need to click "Show more options").</li>
+            <li>Navigate to <strong>"Send to"</strong> in the context menu.</li>
+            <li>Choose <strong>"Hide Selected Files"</strong> or <strong>"Recover Selected Files"</strong> as needed.</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><strong>Recovering All Hidden Files:</strong>
+          <ul style="margin-left: 20px;">
+            <li>Right-click on an empty area on your desktop or within any folder in File Explorer.</li>
+            <li>Select <strong>"Recover all files"</strong> from the context menu.</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><strong>Recovering Hidden Files in the Current Folder:</strong>
+          <ul style="margin-left: 20px;">
+            <li>Right-click on an empty area within the folder in File Explorer (on Windows 11, you might need to click "Show more options").</li>
+            <li>Select <strong>"Recover Files in This folder"</strong> from the context menu.</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><strong>Recovering Hidden Files in the Current Folder and Subfolders (Recursive):</strong>
+          <ul style="margin-left: 20px;">
+            <li>Right-click on an empty area within the folder in File Explorer (on Windows 11, you might need to click "Show more options").</li>
+            <li>Select <strong>"Recover Files Recursively (Include SubFolders)"</strong> from the context menu.</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-* Right-click on the file you want to hide or recover.
-* In the context menu (on Windows 11, you might need to click "Show more options"), select "**Hide File**" or "**Recover File**".
 
-**Opening a Hidden File:**
-
-* Simply double-click the shortcut link file that was created when the file was hidden.
-
-**Hiding/Recovering Multiple Selected Files:**
-
-* Select all the files you want to hide or recover.
-* Right-click on any of the selected files (on Windows 11, you might need to click "Show more options").
-* Navigate to "**Send to**" in the context menu.
-* Choose "**Hide Selected Files**" or "**Recover Selected Files**" as needed.
-
-**Recovering All Hidden Files:**
-
-* Right-click on an empty area on your desktop or within any folder in File Explorer.
-* Select "**Recover all files**" from the context menu.
-
-**Recovering Hidden Files in the Current Folder:**
-
-* Right-click on an empty area within the folder in File Explorer (on Windows 11, you might need to click "Show more options").
-* Select "**Recover Files in This folder**" from the context menu.
-
-**Recovering Hidden Files in the Current Folder and Subfolders (Recursive):**
-
-* Right-click on an empty area within the folder in File Explorer (on Windows 11, you might need to click "Show more options").
-* Select "**Recover Files Recursively (Include SubFolders)**" from the context menu.
 
 <br>
 
-## Uninstallation
+<a name="uninstallation"></a>
+## 🗑️Uninstallation
 
-**Important:** Before proceeding with uninstallation, ensure that you have recovered all your hidden files. The uninstallation process only removes the application and the right-click menu entries and **does not automatically recover your hidden data.**
+> ⚠️**Important:** Before proceeding with uninstallation, ensure that you have recovered all your hidden files. The uninstallation process only removes the application and the right-click menu entries and **does not automatically recover your hidden data.**
 
-**If you installed from source:**
-
-To remove the right-click menu options from your system, run the following batch file as an administrator:
-
-```batch
-Remove-RightClick.bat
-```
-
-After running this script, you can manually delete the cloned repository folder if you wish to remove the project files entirely.
+**If you installed from source:**  
+1.  To remove the right-click menu options from your system, run the following batch file as an administrator:  
+    ```batch
+    Remove-RightClick.bat
+    ```  
+2.  After running this script, you can manually delete the cloned repository folder if you wish to remove the project files entirely.
 
 **If you installed via the standalone executable:**
-
 1.  Uninstall the application through the Windows Control Panel (Add or Remove Programs or Apps & features, depending on your Windows version).
-2.  Upon initiating the uninstallation, your browser will be redirected to an `Uninstall-README.md` file. Read [here](Uninstall-README.md)
+2.  Upon initiating the uninstallation, your browser will be redirected to an `Uninstall-README.md` file. Read uninstallation guide [here](Uninstall-README.md).
 3.  Follow the instructions in the `Uninstall-README.md` file to locate the `Remove-RightClickMenuOptions.bat` file.
 4.  **Run the `Remove-RightClickMenuOptions.bat` file as an administrator** to remove the right-click menu options from your system.
 5.  After running the batch file, the application files should be fully removed from your system by the uninstaller.
 
 <br>
 
-## License
+## 📄License
 This project follows the license of the original repository. See the [LICENSE](LICENSE) file for details.
 
 <br>
 
-## Acknowledgements
+## 🌟Acknowledgements
 
 This project gratefully acknowledges the foundational work of the authors of the research paper "**Hiding in the Crowd: Ransomware Protection by Adopting Camouflage and Hiding Strategy With the Link File**" and the initial implementation by [hanXen](https://github.com/hanXen). Their research provided the inspiration and improvements for this project.
