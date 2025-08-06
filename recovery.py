@@ -3,7 +3,9 @@ ShadowCrypt File Recover Module
 
 This module handles the recovery of files that were previously hidden.
 It restores obfuscated files to their original names and removes
-associated shortcuts (.lnk files).
+associated shortcut (.lnk) files. If the original location is inaccessible
+or appears to be encrypted, recovered files are placed in a backup directory:
+    C:\Windows\ShadowCrypt_Backup
 
 Usage:
     python recovery.py --hash <hashed_filename>         # Recover a file using its hash
@@ -46,7 +48,6 @@ def is_folder_possibly_encrypted(path):
     try:
         for filename in os.listdir(path):
             lower = filename.lower()
-            full_path = os.path.join(path, filename)
 
             # Check for suspicious file extensions
             _, ext = os.path.splitext(filename)
