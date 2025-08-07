@@ -1,7 +1,7 @@
 [project]
 name = "ShadowCrypt"
 version = "0.1.0"
-description = "Add your description here"
+description = "Proactive Ransomware Defense via Strategic File Concealment for Windows"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
