@@ -315,15 +315,16 @@ def main(hashed_name: str | None = None, files: list | None = None,
 
     elif recover_all:
         found_lnk_files = find_lnks_with_hash()
-        if not found_lnk_files:
+        if found_lnk_files:
+            recover_valid_found_links(found_lnk_files, hash_table, mapping_dict)
+
+        hidden_files = list(mapping_dict.keys())
+        if hidden_files:
             print("\n[*] Recovering all hidden files to the original paths.")
-            hidden_files = list(mapping_dict.keys())
             for hidden_file in hidden_files:
                 recovered = recovery(hidden_file, mapping_dict, hash_table)
                 if not recovered:
                     print(f"[-] Failed to recover {hidden_file}.")
-        else:
-            recover_valid_found_links(found_lnk_files, hash_table, mapping_dict)
 
     elif files:
         for file_path in files:
