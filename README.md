@@ -75,9 +75,9 @@ This project aims to make robust ransomware defense and secure file management m
 
 To run this project on your Windows system, ensure the following are installed:
 
-* <img src="images/Readme-Images/Python_Logo.png" alt="Python_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **Python:** Version 3.12 or higher is required. You can download it from [here](https://www.python.org/downloads/).
-* <img src="images/Readme-Images/Powershell_logo.png" alt="Powershell_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **PowerShell:** Windows PowerShell is typically pre-installed on modern Windows systems. Ensure it is enabled and accessible. If needed, you can download the latest version from [here](https://github.com/PowerShell/PowerShell/releases).
-* <img src="images/Readme-Images/uv_Logo.png" alt="UV_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **uv:** This package installer is required. You can install it using pip:
+* <img src="assets/Readme-Images/Python_Logo.png" alt="Python_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **Python:** Version 3.12 or higher is required. You can download it from [here](https://www.python.org/downloads/).
+* <img src="assets/Readme-Images/Powershell_logo.png" alt="Powershell_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **PowerShell:** Windows PowerShell is typically pre-installed on modern Windows systems. Ensure it is enabled and accessible. If needed, you can download the latest version from [here](https://github.com/PowerShell/PowerShell/releases).
+* <img src="assets/Readme-Images/uv_Logo.png" alt="UV_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **uv:** This package installer is required. You can install it using pip:
     ```bash
     pip install uv
     ```
@@ -87,9 +87,9 @@ To run this project on your Windows system, ensure the following are installed:
 
 This project supports secure hiding and recovery of various file formats by leveraging external applications. Installing these applications will ensure a seamless experience with a wider range of files:
 
-* <img src="images/Readme-Images/LibreOffice_Logo.png" alt="LibreOffice_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **LibreOffice:** (for documents, presentations, spreadsheets, PDFs) Download from [here](https://www.libreoffice.org/download/download-libreoffice/).
-* <img src="images/Readme-Images/7zip_logo.png" alt="P7zip_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **7-Zip:** (for archive formats) Download from [here](https://www.7-zip.org/download.html).
-* <img src="images/Readme-Images/VLC_Logo.png" alt="VLC_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **VLC Media Player:** (for audio and video files) Download from [here](https://www.videolan.org/vlc/).
+* <img src="assets/Readme-Images/LibreOffice_Logo.png" alt="LibreOffice_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **LibreOffice:** (for documents, presentations, spreadsheets, PDFs) Download from [here](https://www.libreoffice.org/download/download-libreoffice/).
+* <img src="assets/Readme-Images/7zip_logo.png" alt="P7zip_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **7-Zip:** (for archive formats) Download from [here](https://www.7-zip.org/download.html).
+* <img src="assets/Readme-Images/VLC_Logo.png" alt="VLC_Logo" style="width:30px;height:auto; margin-bottom: -3px;">&nbsp;&nbsp; **VLC Media Player:** (for audio and video files) Download from [here](https://www.videolan.org/vlc/).
 
 **Note:** Ensure these applications are installed in their default locations for automatic path detection. You can optionally verify or manually configure the application paths later in the [`app_path.json`](db/app_path.json) file.
 
