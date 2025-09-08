@@ -22,6 +22,7 @@ Usage Examples:
 import os
 import sys
 import time
+import errno
 import subprocess
 try:
     from modules.common_utils import get_dir_path, hold_console_for_input
@@ -47,6 +48,7 @@ def display_banner():
     print(" /____/_/ /_/\\__,_/\\__,_/\\____/|__/|__/   \\____/_/   \\__, / .___/\\__/")
     print("                                                    /____/_/\n")
     print("=" * 75)
+
 
 def should_reinitialize_db():
     """
@@ -181,9 +183,25 @@ def main():
 
     try:
         subprocess.run(command, check=True)
+    except OSError as e:
+        winerror = getattr(e, "winerror", None)
+        if e.errno == errno.EPERM or winerror == 225:
+            print("\n[!] It looks like a security program is preventing this application from running.")
+            print("\n[*] To fix this, please try the following steps:")
+            print("    1. Reinstall ShadowCrypt.")
+            print("    2. Add the installation directory (e.g., 'C:\\Program Files (x86)\\ShadowCrypt') to your antivirus or security software's exclusion list.")
+            print("    3. Restart your computer and try again.\n\nExiting...\n")
+        else:
+            print(f"\n[!] OS Error occurred: {e}")
+        hold_console_for_input()
+        sys.exit(1)
     except subprocess.CalledProcessError as e:
         sys.exit(1)
     except (KeyboardInterrupt, EOFError):
+        sys.exit(1)
+    except Exception as e:
+        print(f"\n[!] An unexpected error occurred: {e}")
+        hold_console_for_input()
         sys.exit(1)
 
     return module
