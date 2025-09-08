@@ -51,7 +51,7 @@ def main(standalone=False) -> None:
         SystemExit: If required files are not found in the expected directory.
 
     Output files:
-    - enc_mapping.dll: Encrypted mapping data.
+    - enc_<username>_mapping.dll: Encrypted mapping data.
     - enc_app_path.dll: Encrypted application path data.
     """
     dir_path = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else get_dir_path()
