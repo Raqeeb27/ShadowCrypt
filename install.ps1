@@ -17,7 +17,7 @@ echo "`n---------------------------------`n"
 
 echo "[*] Initializing databases.`n"
 if ((Test-Path "db\enc_${env:USERNAME}_mapping.dll") -and (Test-Path "db\enc_app_path.dll")) {
-    $confirmation = Read-Host "Do you want to reinitialize the database?`n**Recommended** - Recover all the hidden files first!`nWarning: This will overwrite the existing databases.`nType 'yes' to continue "
+    $confirmation = Read-Host "Do you want to reinitialize the database?`n**Recommended** - Recover all the hidden files first!`nWarning: This will overwrite the existing databases.`n`nType 'yes' to continue "
 } else {
     $confirmation = "yes"
 }
