@@ -21,4 +21,8 @@ if exist "%recovery_shortcut_path%" (
     del "%recovery_shortcut_path%"
 )
 
+echo.
+echo "[*] Successfully removed the registry entries for right-click context menu."
+echo.
+
 pause
