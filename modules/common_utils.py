@@ -149,6 +149,8 @@ def move_file(src_path: str, dest_path: str) -> bool:
 
     if error_code == 5:
         print(f"\n[!] Access Denied for {src_path}: Check file/folder permissions or run as administrator.")
+    elif error_code == 2:
+        print(f"\n[!] File not found: {src_path}.")
     elif error_code == 32:
         print(f"\n[!] File is in use by another process {src_path}. Close the file and try again.")
     else:
